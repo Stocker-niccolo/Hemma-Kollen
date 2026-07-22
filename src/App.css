@@ -1,0 +1,77 @@
+:root {
+  --bg: #0f1115;
+  --kort: #181b22;
+  --kant: #262b36;
+  --text: #e7ebf3;
+  --dim: #8b93a4;
+  --accent: #35d07f;
+  --accent-dim: #1f7a4d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+
+.wrap { max-width: 640px; margin: 0 auto; padding: 32px 20px 80px; }
+.topp h1 { margin: 0; font-size: 28px; letter-spacing: -0.5px; }
+.tagline { margin: 4px 0 0; color: var(--dim); }
+
+.demo-badge {
+  display: inline-block; margin-top: 10px; padding: 3px 10px;
+  border: 1px solid var(--kant); border-radius: 999px; font-size: 12px; color: var(--dim);
+}
+
+.hero-kort {
+  margin: 24px 0 8px; padding: 22px;
+  background: linear-gradient(160deg, var(--accent-dim), var(--kort));
+  border: 1px solid var(--kant); border-radius: 16px;
+}
+.hero-siffra { display: flex; flex-direction: column; }
+.belopp { font-size: 40px; font-weight: 700; letter-spacing: -1px; }
+.etikett { color: #cfe9d9; font-size: 13px; }
+.hero-meta { display: flex; gap: 24px; margin-top: 16px; color: #cfe9d9; font-size: 14px; }
+.hero-meta strong { color: #fff; }
+
+h2 {
+  font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--dim); margin: 32px 0 12px;
+}
+
+.lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.kort { background: var(--kort); border: 1px solid var(--kant); border-radius: 14px; padding: 16px; }
+.kort-topp { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+
+.taggen {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 3px 8px; border-radius: 6px; background: #23303e; color: #9ec5ff;
+}
+.v-el { background: #2a2f1e; color: #d8e57a; }
+.v-forsakring { background: #2a1e2f; color: #e07ad0; }
+.v-mobil { background: #1e2a2f; color: #7ad8e5; }
+
+.spar { color: var(--accent); font-weight: 700; font-size: 15px; }
+.kort h3 { margin: 0 0 10px; font-size: 17px; }
+.rad { margin: 4px 0; font-size: 14px; }
+.dim { color: var(--dim); }
+.anledning { margin: 10px 0 12px; font-size: 13px; color: var(--dim); font-style: italic; }
+.cta { display: inline-block; color: var(--accent); font-weight: 600; text-decoration: none; }
+.cta:hover { text-decoration: underline; }
+
+.rak .rakning {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  background: var(--kort); border: 1px solid var(--kant); border-radius: 10px;
+  padding: 12px 14px; font-size: 14px;
+}
+.belopp-liten { font-weight: 700; }
+
+.friday { margin-top: 32px; color: var(--dim); }
+.friday summary { cursor: pointer; font-size: 13px; }
+.friday pre {
+  background: var(--kort); border: 1px solid var(--kant); border-radius: 10px;
+  padding: 14px; font-size: 12px; overflow-x: auto;
+}
