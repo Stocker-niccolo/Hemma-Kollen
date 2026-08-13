@@ -63,6 +63,10 @@ npm run build
 Samma kontroller körs i GitHub Actions för varje pull request och push till
 `main`.
 
+Produktionsbygget kompletteras automatiskt med en liten Worker-ingång och
+hostingmetadata för OpenAI Sites. Appens vanliga Vite-utvecklingsflöde är
+oförändrat.
+
 ## Viktiga produktprinciper
 
 - Hemma Kollen ska kännas hjälpsam även utan ett partnererbjudande.
