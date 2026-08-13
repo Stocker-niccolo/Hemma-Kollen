@@ -42,18 +42,18 @@ const NU = new Date();
 
 const nav: Array<{ id: Vy; ikon: string; etikett: string }> = [
   { id: "oversikt", ikon: "⌂", etikett: "Översikt" },
-  { id: "rakningar", ikon: "▤", etikett: "Räkningar" },
   { id: "sysslor", ikon: "✓", etikett: "Sysslor" },
-  { id: "inkop", ikon: "◌", etikett: "Inköp" },
-  { id: "avtal", ikon: "◇", etikett: "Avtal" },
+  { id: "inkop", ikon: "◌", etikett: "Inköpslista" },
+  { id: "rakningar", ikon: "▤", etikett: "Räkningar" },
+  { id: "avtal", ikon: "◇", etikett: "Jämför avtal" },
 ];
 
 const vyRubriker: Record<Vy, string> = {
   oversikt: "",
   rakningar: "Räkningar",
   sysslor: "Sysslor",
-  inkop: "Inköp",
-  avtal: "Avtal & abonnemang",
+  inkop: "Inköpslista",
+  avtal: "Jämför avtal",
 };
 
 const avtalskategorier: Record<Avtalskategori, { etikett: string; ikon: string }> = {
@@ -655,7 +655,7 @@ function Overview({ nastaRakning, obetalda, oppnaSysslor, sysslor, inkop, hushal
         </button>
         <button className="stat-card" onClick={() => onChangeView("avtal")}>
           <span className="stat-icon green">◇</span>
-          <span><small>Avtal & abonnemang</small><strong>{kronor(avtalskostnad)}</strong><em>per månad · {hushallsavtal.length} avtal</em></span>
+          <span><small>Jämför avtal</small><strong>{kronor(avtalskostnad)}</strong><em>per månad · {hushallsavtal.length} avtal</em></span>
           <span className="arrow">→</span>
         </button>
       </section>
@@ -815,7 +815,7 @@ function Contracts({ avtal, onAdd }: { avtal: Hushallsavtal[]; onAdd: () => void
   return (
     <section className="page-panel">
       <div className="page-intro">
-        <div><p>Samla försäkringar, abonnemang och löpande avtal. Se vad hemmet kostar och när det är dags att se över något.</p></div>
+        <div><p>Samla och jämför försäkringar, abonnemang och löpande avtal. Se vad hemmet kostar och när det är dags att se över något.</p></div>
         <button className="primary-button" onClick={onAdd}>+ Lägg till avtal</button>
       </div>
 

@@ -15,6 +15,7 @@ Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/>
 - Avtal och abonnemang för försäkring, bredband, streaming/TV, mobil, el,
   vatten och gym.
 - Samlad månads- och årskostnad samt nästa viktiga avtalsdatum.
+- Tydlig huvudmeny: Översikt, Sysslor, Inköpslista, Räkningar och Jämför avtal.
 - Formulär för manuell registrering direkt i gränssnittet.
 - Lösenordsfri inloggning via säker engångslänk i mejl.
 - Automatisk skapelse av första hushållet och live-synkning av formulär/status.
