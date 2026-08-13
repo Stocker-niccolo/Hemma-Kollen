@@ -3,6 +3,8 @@
 Ett gemensamt nav för vardagen hemma. Hemma Kollen samlar räkningar, sysslor,
 viktiga datum och möjliga besparingar i en lugn, mobilanpassad webbapp.
 
+Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/>
+
 ## Första versionen
 
 - Hushållsöversikt med nästa räkning, veckans sysslor och besparingssignal.
