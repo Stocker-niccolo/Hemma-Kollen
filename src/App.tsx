@@ -42,9 +42,9 @@ const NU = new Date();
 
 const nav: Array<{ id: Vy; ikon: string; etikett: string }> = [
   { id: "oversikt", ikon: "⌂", etikett: "Översikt" },
-  { id: "sysslor", ikon: "✓", etikett: "Sysslor" },
-  { id: "inkop", ikon: "◌", etikett: "Inköpslista" },
   { id: "rakningar", ikon: "▤", etikett: "Räkningar" },
+  { id: "inkop", ikon: "◌", etikett: "Inköpslista" },
+  { id: "sysslor", ikon: "✓", etikett: "Sysslor" },
   { id: "avtal", ikon: "◇", etikett: "Jämför avtal" },
 ];
 

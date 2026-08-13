@@ -41,7 +41,7 @@ pengar och ansvar utan att införa ännu ett tungt projektverktyg.
 - Avtal: kategori, undertyp, leverantör, månadskostnad och nästa viktiga datum.
 - Avtalskategorier: försäkringar, bredband, streaming/TV, mobil, el, vatten och gym.
 - Försäkringsundertyper: hem, bil, djur, resa, person och annat.
-- Översikt, Sysslor, Inköpslista, Räkningar och Jämför avtal som separata
+- Översikt, Räkningar, Inköpslista, Sysslor och Jämför avtal som separata
   mobilanpassade huvudval.
 - Manuell inmatning som alltid fungerande reservväg.
 - Supabase RLS, tidsstämplar och grundläggande datavalidering.
