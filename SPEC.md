@@ -111,6 +111,7 @@ säger aldrig **”vi rekommenderar”** när försäkring berörs.
 - [x] Produktnamnet är Hemma Kollen i klient och dokumentation.
 - [x] Webbappen har fungerande vyer för översikt, räkningar och sysslor.
 - [x] Räkningar och sysslor kan läggas till och ändra status i demo-läge.
+- [x] Auth, första hushållet och CRUD är kopplade till Supabase-klienten.
 - [x] Databasmigrering med RLS finns versionshanterad.
 - [x] GitHub Actions-konfiguration finns.
 - [x] Test, lint och produktionsbygge passerar lokalt.

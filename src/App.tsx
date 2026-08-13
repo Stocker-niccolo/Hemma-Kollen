@@ -1,12 +1,22 @@
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { DEMO_AVTAL, DEMO_HUSHALL, DEMO_RAKNINGAR, DEMO_SYSSLOR } from "./data/demo";
 import type { Rakning, Syssla, Vertikal } from "./domain/types";
 import { beraknaBesparingar, totalArsbesparing } from "./engine/besparingar";
-import { harSupabase } from "./lib/supabase";
+import {
+  hamtaEllerSkapaHushall,
+  hamtaRakningar,
+  hamtaSysslor,
+  sattRakningBetald,
+  sattSysslaKlar,
+  skapaRakning,
+  skapaSyssla,
+} from "./lib/database";
+import { harSupabase, loggaInMedEpost, loggaUt, supabase } from "./lib/supabase";
 import "./App.css";
 
 type Vy = "oversikt" | "rakningar" | "sysslor";
 type Formular = "rakning" | "syssla" | null;
+type DataKalla = "demo" | "synkar" | "live";
 
 const NU = new Date("2026-08-13T12:00:00+02:00");
 
@@ -47,9 +57,80 @@ function forfallsText(iso: string) {
 export default function App() {
   const [vy, setVy] = useState<Vy>("oversikt");
   const [formular, setFormular] = useState<Formular>(null);
-  const [rakningar, setRakningar] = useState<Rakning[]>(DEMO_RAKNINGAR);
-  const [sysslor, setSysslor] = useState<Syssla[]>(DEMO_SYSSLOR);
+  const [rakningar, setRakningar] = useState<Rakning[]>(harSupabase ? [] : DEMO_RAKNINGAR);
+  const [sysslor, setSysslor] = useState<Syssla[]>(harSupabase ? [] : DEMO_SYSSLOR);
   const [notis, setNotis] = useState<string | null>(null);
+  const [authKontrollerad, setAuthKontrollerad] = useState(!harSupabase);
+  const [anvandarId, setAnvandarId] = useState<string | null>(null);
+  const [visningsnamn, setVisningsnamn] = useState("Niccolò");
+  const [hushallId, setHushallId] = useState(harSupabase ? "" : DEMO_HUSHALL);
+  const [hushallsnamn, setHushallsnamn] = useState("Familjen Stocker");
+  const [dataKalla, setDataKalla] = useState<DataKalla>(harSupabase ? "synkar" : "demo");
+
+  useEffect(() => {
+    const klient = supabase;
+    if (!klient) return;
+
+    let aktiv = true;
+    void klient.auth.getSession().then(({ data }) => {
+      if (!aktiv) return;
+      const anvandare = data.session?.user;
+      setAnvandarId(anvandare?.id ?? null);
+      setVisningsnamn(
+        String(anvandare?.user_metadata.display_name ?? anvandare?.email?.split("@")[0] ?? "hemma"),
+      );
+      setAuthKontrollerad(true);
+    });
+
+    const { data } = klient.auth.onAuthStateChange((_handelse, session) => {
+      const anvandare = session?.user;
+      setAnvandarId(anvandare?.id ?? null);
+      setVisningsnamn(
+        String(anvandare?.user_metadata.display_name ?? anvandare?.email?.split("@")[0] ?? "hemma"),
+      );
+      setAuthKontrollerad(true);
+    });
+
+    return () => {
+      aktiv = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!harSupabase || !anvandarId) return;
+    let aktiv = true;
+    setDataKalla("synkar");
+
+    void (async () => {
+      try {
+        const hushall = await hamtaEllerSkapaHushall(anvandarId);
+        const [nyaRakningar, nyaSysslor] = await Promise.all([
+          hamtaRakningar(hushall.id),
+          hamtaSysslor(hushall.id),
+        ]);
+        if (!aktiv) return;
+        setHushallId(hushall.id);
+        setHushallsnamn(hushall.namn);
+        setRakningar(nyaRakningar);
+        setSysslor(nyaSysslor);
+        setDataKalla("live");
+      } catch (error) {
+        console.error("Kunde inte synka hushållet", error);
+        if (!aktiv) return;
+        setHushallId(DEMO_HUSHALL);
+        setHushallsnamn("Familjen Stocker");
+        setRakningar(DEMO_RAKNINGAR);
+        setSysslor(DEMO_SYSSLOR);
+        setDataKalla("demo");
+        visaNotis("Databasen är inte redo ännu — visar demo");
+      }
+    })();
+
+    return () => {
+      aktiv = false;
+    };
+  }, [anvandarId]);
 
   const forslag = useMemo(
     () => beraknaBesparingar(DEMO_AVTAL, rakningar, NU),
@@ -71,55 +152,107 @@ export default function App() {
     window.setTimeout(() => setNotis(null), 2800);
   }
 
-  function markeraBetald(id: string) {
+  async function markeraBetald(id: string) {
+    const befintlig = rakningar.find((rakning) => rakning.id === id);
+    if (!befintlig) return;
+    const betald = !befintlig.betald;
     setRakningar((nuvarande) =>
       nuvarande.map((rakning) =>
-        rakning.id === id ? { ...rakning, betald: !rakning.betald } : rakning,
+        rakning.id === id ? { ...rakning, betald } : rakning,
       ),
     );
+    if (dataKalla !== "live") return;
+    try {
+      await sattRakningBetald(id, betald);
+    } catch (error) {
+      console.error("Kunde inte uppdatera räkningen", error);
+      setRakningar((nuvarande) =>
+        nuvarande.map((rakning) =>
+          rakning.id === id ? { ...rakning, betald: befintlig.betald } : rakning,
+        ),
+      );
+      visaNotis("Kunde inte spara ändringen");
+    }
   }
 
-  function markeraSyssla(id: string) {
+  async function markeraSyssla(id: string) {
+    const befintlig = sysslor.find((syssla) => syssla.id === id);
+    if (!befintlig) return;
+    const klar = !befintlig.klar;
     setSysslor((nuvarande) =>
       nuvarande.map((syssla) =>
-        syssla.id === id ? { ...syssla, klar: !syssla.klar } : syssla,
+        syssla.id === id ? { ...syssla, klar } : syssla,
       ),
     );
+    if (dataKalla !== "live") return;
+    try {
+      await sattSysslaKlar(id, klar);
+    } catch (error) {
+      console.error("Kunde inte uppdatera sysslan", error);
+      setSysslor((nuvarande) =>
+        nuvarande.map((syssla) =>
+          syssla.id === id ? { ...syssla, klar: befintlig.klar } : syssla,
+        ),
+      );
+      visaNotis("Kunde inte spara ändringen");
+    }
   }
 
-  function laggTillRakning(event: FormEvent<HTMLFormElement>) {
+  async function laggTillRakning(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const ny: Rakning = {
-      id: crypto.randomUUID(),
-      hushallId: DEMO_HUSHALL,
+    const innehall = {
       leverantor: String(data.get("leverantor")),
       belopp: Number(data.get("belopp")),
       forfallodatum: String(data.get("forfallodatum")),
       vertikal: String(data.get("kategori")) as Vertikal,
-      betald: false,
-      kalla: "manuell",
+      kalla: "manuell" as const,
     };
-    setRakningar((nuvarande) => [...nuvarande, ny]);
-    setFormular(null);
-    visaNotis("Räkningen är tillagd");
+    try {
+      const ny = dataKalla === "live"
+        ? await skapaRakning(hushallId, innehall)
+        : { ...innehall, id: crypto.randomUUID(), hushallId: DEMO_HUSHALL, betald: false };
+      setRakningar((nuvarande) => [...nuvarande, ny]);
+      setFormular(null);
+      visaNotis(dataKalla === "live" ? "Räkningen är sparad" : "Räkningen är tillagd i demon");
+    } catch (error) {
+      console.error("Kunde inte skapa räkningen", error);
+      visaNotis("Kunde inte spara räkningen");
+    }
   }
 
-  function laggTillSyssla(event: FormEvent<HTMLFormElement>) {
+  async function laggTillSyssla(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const ny: Syssla = {
-      id: crypto.randomUUID(),
-      hushallId: DEMO_HUSHALL,
+    const innehall = {
       titel: String(data.get("titel")),
       ansvarig: String(data.get("ansvarig")),
       forfallodatum: String(data.get("forfallodatum")),
-      kategori: "hem",
-      klar: false,
+      kategori: "hem" as const,
     };
-    setSysslor((nuvarande) => [...nuvarande, ny]);
-    setFormular(null);
-    visaNotis("Sysslan är tillagd");
+    try {
+      const ny = dataKalla === "live"
+        ? await skapaSyssla(hushallId, innehall)
+        : { ...innehall, id: crypto.randomUUID(), hushallId: DEMO_HUSHALL, klar: false };
+      setSysslor((nuvarande) => [...nuvarande, ny]);
+      setFormular(null);
+      visaNotis(dataKalla === "live" ? "Sysslan är sparad" : "Sysslan är tillagd i demon");
+    } catch (error) {
+      console.error("Kunde inte skapa sysslan", error);
+      visaNotis("Kunde inte spara sysslan");
+    }
+  }
+
+  if (harSupabase && !authKontrollerad) {
+    return <LoadingScreen text="Öppnar Hemma Kollen…" />;
+  }
+
+  if (harSupabase && !anvandarId) {
+    return <LoginScreen />;
+  }
+
+  if (dataKalla === "synkar") {
+    return <LoadingScreen text="Hämtar hushållet…" />;
   }
 
   return (
@@ -147,7 +280,7 @@ export default function App() {
         <div className="sidebar-bottom">
           <div className="household-switcher">
             <span className="avatar">NS</span>
-            <span><strong>Familjen Stocker</strong><small>2 medlemmar</small></span>
+            <span><strong>{hushallsnamn}</strong><small>{dataKalla === "live" ? "Synkat hushåll" : "2 medlemmar"}</small></span>
             <span aria-hidden="true">⌄</span>
           </div>
           <div className="privacy-note">
@@ -161,12 +294,14 @@ export default function App() {
         <header className="topbar">
           <div>
             <p className="eyebrow">Torsdag 13 augusti</p>
-            <h1>{vy === "oversikt" ? "Hej Niccolò!" : vy === "rakningar" ? "Räkningar" : "Sysslor"}</h1>
+            <h1>{vy === "oversikt" ? `Hej ${visningsnamn}!` : vy === "rakningar" ? "Räkningar" : "Sysslor"}</h1>
           </div>
           <div className="topbar-actions">
-            {!harSupabase && <span className="demo-pill">Demo</span>}
+            {dataKalla === "demo" && <span className="demo-pill">Demo</span>}
+            {dataKalla === "live" && <span className="live-pill">Synkad</span>}
             <button className="icon-button" aria-label="Notiser">♢<span className="notification-dot" /></button>
             <button className="invite-button" onClick={() => visaNotis("Inbjudningar öppnas när kontot är anslutet")}>+ Bjud in</button>
+            {harSupabase && <button className="logout-button" onClick={() => void loggaUt()}>Logga ut</button>}
           </div>
         </header>
 
@@ -228,6 +363,79 @@ export default function App() {
 
       {notis && <div className="toast" role="status">✓ {notis}</div>}
     </div>
+  );
+}
+
+function LoadingScreen({ text }: { text: string }) {
+  return (
+    <main className="auth-screen">
+      <div className="auth-card loading-card" role="status">
+        <span className="auth-brand-mark" aria-hidden="true">H</span>
+        <div className="loading-dot" aria-hidden="true" />
+        <p>{text}</p>
+      </div>
+    </main>
+  );
+}
+
+function LoginScreen() {
+  const [epost, setEpost] = useState("");
+  const [skickad, setSkickad] = useState(false);
+  const [skickar, setSkickar] = useState(false);
+  const [fel, setFel] = useState<string | null>(null);
+
+  async function skickaInloggningslank(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSkickar(true);
+    setFel(null);
+    const { error } = await loggaInMedEpost(epost);
+    setSkickar(false);
+    if (error) {
+      console.error("Kunde inte skicka inloggningslänk", error);
+      setFel("Länken kunde inte skickas. Kontrollera adressen och försök igen.");
+      return;
+    }
+    setSkickad(true);
+  }
+
+  return (
+    <main className="auth-screen">
+      <section className="auth-card">
+        <div className="auth-brand">
+          <span className="auth-brand-mark" aria-hidden="true">H</span>
+          <span>Hemma Kollen</span>
+        </div>
+        <p className="eyebrow">Välkommen hem</p>
+        <h1>Logga in utan lösenord.</h1>
+        <p className="auth-intro">Vi skickar en säker engångslänk till din mejl. Första gången skapar vi ditt hushåll automatiskt.</p>
+
+        {skickad ? (
+          <div className="auth-success" role="status">
+            <span aria-hidden="true">✓</span>
+            <div><strong>Kolla inkorgen</strong><p>Öppna länken vi skickade till {epost}.</p></div>
+          </div>
+        ) : (
+          <form className="form auth-form" onSubmit={skickaInloggningslank}>
+            <label>
+              E-postadress
+              <input
+                type="email"
+                value={epost}
+                onChange={(event) => setEpost(event.target.value)}
+                placeholder="du@exempel.se"
+                autoComplete="email"
+                required
+              />
+            </label>
+            {fel && <p className="form-error" role="alert">{fel}</p>}
+            <button className="primary-button full" type="submit" disabled={skickar}>
+              {skickar ? "Skickar…" : "Skicka inloggningslänk"}
+            </button>
+          </form>
+        )}
+        <small className="auth-privacy">Dina räkningar och sysslor skyddas per hushåll.</small>
+      </section>
+    </main>
   );
 }
 

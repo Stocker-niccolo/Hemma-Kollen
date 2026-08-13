@@ -9,6 +9,8 @@ viktiga datum och möjliga besparingar i en lugn, mobilanpassad webbapp.
 - Räkningar med leverantör, belopp, förfallodatum och betalstatus.
 - Delade sysslor med ansvarig, deadline och återkommande uppgifter.
 - Formulär för manuell registrering direkt i gränssnittet.
+- Lösenordsfri inloggning via säker engångslänk i mejl.
+- Automatisk skapelse av första hushållet och live-synkning av formulär/status.
 - Supabase-grund för konto, hushåll, medlemmar, räkningar och sysslor.
 - RLS-policyer som begränsar all hushållsdata till dess medlemmar.
 - Demo-läge utan miljövariabler.
@@ -25,7 +27,9 @@ npm run dev
 ```
 
 Utan `.env` kör appen på lokal exempeldata. När ett Supabase-projekt är
-anslutet används `VITE_SUPABASE_URL` och `VITE_SUPABASE_ANON_KEY`.
+anslutet används `VITE_SUPABASE_URL` och `VITE_SUPABASE_ANON_KEY`, och appen
+visar inloggning samt läser och skriver hushållets data. Om databasen ännu inte
+är migrerad faller gränssnittet tillbaka till ett tydligt märkt demoläge.
 
 ## Databasen
 
