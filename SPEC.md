@@ -24,7 +24,7 @@ pengar och ansvar utan att införa ännu ett tungt projektverktyg.
 
 1. Användaren skapar konto via en e-postlänk.
 2. Användaren skapar eller ansluter till ett hushåll.
-3. Hushållet registrerar en räkning eller syssla manuellt.
+3. Hushållet registrerar en räkning, syssla, ett inköp eller avtal manuellt.
 4. Alla medlemmar ser samma uppdaterade översikt.
 5. En medlem markerar räkningen betald eller sysslan klar.
 6. Hemma Kollen visar nästa viktiga datum och veckans framsteg.
@@ -37,7 +37,11 @@ pengar och ansvar utan att införa ännu ett tungt projektverktyg.
 - Medlemsrollerna ägare och medlem.
 - Räkningar: leverantör, kategori, belopp, förfallodatum och status.
 - Sysslor: titel, ansvarig, deadline, status och enkel återkomst.
-- Översikt, räkningar och sysslor som separata mobilanpassade vyer.
+- Inköp: namn, mängd, kategori och köpstatus i en gemensam lista.
+- Avtal: kategori, undertyp, leverantör, månadskostnad och nästa viktiga datum.
+- Avtalskategorier: försäkringar, bredband, streaming/TV, mobil, el, vatten och gym.
+- Försäkringsundertyper: hem, bil, djur, resa, person och annat.
+- Översikt, räkningar, sysslor, inköp och avtal som separata mobilanpassade vyer.
 - Manuell inmatning som alltid fungerande reservväg.
 - Supabase RLS, tidsstämplar och grundläggande datavalidering.
 - Demo-läge när backend saknas.
@@ -59,7 +63,7 @@ pengar och ansvar utan att införa ännu ett tungt projektverktyg.
 - Automatisk Swish-bekräftelse.
 - Egen försäkringsrådgivning eller försäkringsförmedling.
 - Betalabonnemang.
-- Mat-, hantverkar- eller marknadsplatsfunktioner.
+- Matbeställning, hantverkar- eller marknadsplatsfunktioner.
 - Avancerad AI-chat.
 
 ## Datamodell
@@ -86,10 +90,22 @@ OCR-tolkade eller senare kommer från Open Banking.
 Tillhör exakt ett hushåll. Kärnfält är titel, ansvarig, deadline, status,
 kategori och eventuell återkomst.
 
+### Inköpsvara
+
+Tillhör exakt ett hushåll och syns för alla medlemmar. Kärnfält är namn, mängd,
+kategori och status. Kategorierna är mat, hushåll, djur och övrigt.
+
+### Avtal och abonnemang
+
+Tillhör exakt ett hushåll. Kärnfält är kategori, eventuell undertyp, namn,
+leverantör, månadskostnad, status och eventuellt förnyelse- eller slutdatum.
+Försäkring har tydliga undertyper för hem, bil, djur, resa och person, medan
+övriga kategorier är bredband, streaming/TV, mobil, el, vatten och gym.
+
 ## Behörighet och integritet
 
 - All hushållsdata har RLS aktiverat.
-- Endast hushållets medlemmar får läsa och ändra räkningar och sysslor.
+- Endast hushållets medlemmar får läsa och ändra räkningar, sysslor, inköp och avtal.
 - Endast ägare får administrera hushåll och medlemskap.
 - En medlem får inte läsa eller gissa data från ett annat hushåll.
 - Klienten använder endast publik URL och anon key; service role key får aldrig
@@ -110,6 +126,9 @@ säger aldrig **”vi rekommenderar”** när försäkring berörs.
 
 - [x] Produktnamnet är Hemma Kollen i klient och dokumentation.
 - [x] Webbappen har fungerande vyer för översikt, räkningar och sysslor.
+- [x] Webbappen har separata vyer för gemensamma inköp och avtal/abonnemang.
+- [x] Alla beslutade avtalskategorier och försäkringsundertyper finns i klienten.
+- [x] Inköp och avtal har CRUD-grund, demo-data och RLS-migrering.
 - [x] Räkningar och sysslor kan läggas till och ändra status i demo-läge.
 - [x] Auth, första hushållet och CRUD är kopplade till Supabase-klienten.
 - [x] Databasmigrering med RLS finns versionshanterad.

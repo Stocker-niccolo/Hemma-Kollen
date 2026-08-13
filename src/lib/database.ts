@@ -1,4 +1,4 @@
-import type { Rakning, Syssla } from "../domain/types";
+import type { Hushallsavtal, Inkopsvara, Rakning, Syssla } from "../domain/types";
 import { supabase } from "./supabase";
 
 function kravPaKlient() {
@@ -29,6 +29,33 @@ function tillSyssla(rad: Record<string, unknown>): Syssla {
     klar: rad.status === "done",
     kategori: rad.category as Syssla["kategori"],
     aterkommer: (rad.recurrence as Syssla["aterkommer"] | null) ?? undefined,
+  };
+}
+
+function tillInkopsvara(rad: Record<string, unknown>): Inkopsvara {
+  return {
+    id: String(rad.id),
+    hushallId: String(rad.household_id),
+    namn: String(rad.name),
+    antal: String(rad.quantity),
+    kategori: rad.category as Inkopsvara["kategori"],
+    kopd: rad.status === "done",
+  };
+}
+
+function tillHushallsavtal(rad: Record<string, unknown>): Hushallsavtal {
+  return {
+    id: String(rad.id),
+    hushallId: String(rad.household_id),
+    kategori: rad.category as Hushallsavtal["kategori"],
+    underkategori: rad.subcategory ? String(rad.subcategory) : undefined,
+    namn: String(rad.name),
+    leverantor: String(rad.supplier),
+    manadskostnad: Number(rad.monthly_cost),
+    fornyasDatum: rad.renewal_date ? String(rad.renewal_date) : undefined,
+    uppsagningstidManader: rad.notice_period_months == null ? undefined : Number(rad.notice_period_months),
+    status: rad.status as Hushallsavtal["status"],
+    anteckning: rad.notes ? String(rad.notes) : undefined,
   };
 }
 
@@ -149,4 +176,84 @@ export async function sattSysslaKlar(id: string, klar: boolean) {
     })
     .eq("id", id);
   if (error) throw error;
+}
+
+export async function hamtaInkop(hushallId: string): Promise<Inkopsvara[]> {
+  const klient = kravPaKlient();
+  const { data, error } = await klient
+    .from("shopping_items")
+    .select("id, household_id, name, quantity, category, status")
+    .eq("household_id", hushallId)
+    .order("created_at");
+  if (error) throw error;
+  return (data ?? []).map(tillInkopsvara);
+}
+
+export async function skapaInkopsvara(
+  hushallId: string,
+  vara: Omit<Inkopsvara, "id" | "hushallId" | "kopd">,
+) {
+  const klient = kravPaKlient();
+  const { data, error } = await klient
+    .from("shopping_items")
+    .insert({
+      household_id: hushallId,
+      name: vara.namn,
+      quantity: vara.antal,
+      category: vara.kategori,
+      status: "open",
+    })
+    .select("id, household_id, name, quantity, category, status")
+    .single();
+  if (error) throw error;
+  return tillInkopsvara(data);
+}
+
+export async function sattInkopsvaraKopd(id: string, kopd: boolean) {
+  const klient = kravPaKlient();
+  const { error } = await klient
+    .from("shopping_items")
+    .update({
+      status: kopd ? "done" : "open",
+      completed_at: kopd ? new Date().toISOString() : null,
+    })
+    .eq("id", id);
+  if (error) throw error;
+}
+
+export async function hamtaHushallsavtal(hushallId: string): Promise<Hushallsavtal[]> {
+  const klient = kravPaKlient();
+  const { data, error } = await klient
+    .from("contracts")
+    .select("id, household_id, category, subcategory, name, supplier, monthly_cost, renewal_date, notice_period_months, status, notes")
+    .eq("household_id", hushallId)
+    .neq("status", "avslutat")
+    .order("category");
+  if (error) throw error;
+  return (data ?? []).map(tillHushallsavtal);
+}
+
+export async function skapaHushallsavtal(
+  hushallId: string,
+  avtal: Omit<Hushallsavtal, "id" | "hushallId">,
+) {
+  const klient = kravPaKlient();
+  const { data, error } = await klient
+    .from("contracts")
+    .insert({
+      household_id: hushallId,
+      category: avtal.kategori,
+      subcategory: avtal.underkategori ?? null,
+      name: avtal.namn,
+      supplier: avtal.leverantor,
+      monthly_cost: avtal.manadskostnad,
+      renewal_date: avtal.fornyasDatum ?? null,
+      notice_period_months: avtal.uppsagningstidManader ?? null,
+      status: avtal.status,
+      notes: avtal.anteckning ?? null,
+    })
+    .select("id, household_id, category, subcategory, name, supplier, monthly_cost, renewal_date, notice_period_months, status, notes")
+    .single();
+  if (error) throw error;
+  return tillHushallsavtal(data);
 }

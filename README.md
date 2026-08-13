@@ -1,7 +1,8 @@
 # Hemma Kollen
 
 Ett gemensamt nav för vardagen hemma. Hemma Kollen samlar räkningar, sysslor,
-viktiga datum och möjliga besparingar i en lugn, mobilanpassad webbapp.
+inköp, avtal, viktiga datum och möjliga besparingar i en lugn, mobilanpassad
+webbapp.
 
 Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/>
 
@@ -10,10 +11,14 @@ Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/>
 - Hushållsöversikt med nästa räkning, veckans sysslor och besparingssignal.
 - Räkningar med leverantör, belopp, förfallodatum och betalstatus.
 - Delade sysslor med ansvarig, deadline och återkommande uppgifter.
+- Gemensam inköpslista för mat, hushåll, djur och övriga inköp.
+- Avtal och abonnemang för försäkring, bredband, streaming/TV, mobil, el,
+  vatten och gym.
+- Samlad månads- och årskostnad samt nästa viktiga avtalsdatum.
 - Formulär för manuell registrering direkt i gränssnittet.
 - Lösenordsfri inloggning via säker engångslänk i mejl.
 - Automatisk skapelse av första hushållet och live-synkning av formulär/status.
-- Supabase-grund för konto, hushåll, medlemmar, räkningar och sysslor.
+- Supabase-grund för konto, hushåll, medlemmar, räkningar, sysslor, inköp och avtal.
 - RLS-policyer som begränsar all hushållsdata till dess medlemmar.
 - Demo-läge utan miljövariabler.
 
@@ -45,6 +50,10 @@ Den skapar:
 - `bills`
 - `chores`
 - medlems- och ägarstyrda RLS-policyer
+
+Inköp och avtal läggs till av den efterföljande migreringen
+[`supabase/migrations/20260814120000_shopping_and_contracts.sql`](./supabase/migrations/20260814120000_shopping_and_contracts.sql),
+som skapar `shopping_items`, `contracts` och motsvarande RLS-policyer.
 
 Efter att Supabase CLI är installerat och kontot är anslutet:
 

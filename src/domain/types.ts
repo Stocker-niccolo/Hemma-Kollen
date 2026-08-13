@@ -54,6 +54,44 @@ export interface Syssla {
   aterkommer?: "varje_vecka" | "varannan_vecka" | "varje_manad";
 }
 
+export type Inkopskategori = "mat" | "hushall" | "djur" | "ovrigt";
+
+/** En rad i hushållets gemensamma inköpslista. */
+export interface Inkopsvara {
+  id: string;
+  hushallId: string;
+  namn: string;
+  antal: string;
+  kategori: Inkopskategori;
+  kopd: boolean;
+}
+
+export type Avtalskategori =
+  | "forsakring"
+  | "bredband"
+  | "streaming_tv"
+  | "mobil"
+  | "el"
+  | "vatten"
+  | "gym";
+
+export type Avtalsstatus = "aktivt" | "avslutas" | "avslutat";
+
+/** Ett återkommande avtal eller abonnemang som hushållet vill hålla koll på. */
+export interface Hushallsavtal {
+  id: string;
+  hushallId: string;
+  kategori: Avtalskategori;
+  underkategori?: string;
+  namn: string;
+  leverantor: string;
+  manadskostnad: number;
+  fornyasDatum?: string;
+  uppsagningstidManader?: number;
+  status: Avtalsstatus;
+  anteckning?: string;
+}
+
 /** Ett förslag från besparings-motorn. Aldrig "rekommendation" i copy — jämför. */
 export interface Besparingsforslag {
   vertikal: Vertikal;
