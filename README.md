@@ -1,56 +1,68 @@
-# Hemkoll (arbetsnamn)
+# Hemma Kollen
 
-Hushållsassistent för svenska hem. Organiserar hushållet (räkningar, listor,
-sysslor, familjedelning + Swish) och tjänar pengar på en **proaktiv
-besparings-motor** som ser i hushållsdatan när det lönar sig att byta
-el/försäkring/mobil — och knuffar användaren i rätt sekund.
+Ett gemensamt nav för vardagen hemma. Hemma Kollen samlar räkningar, sysslor,
+viktiga datum och möjliga besparingar i en lugn, mobilanpassad webbapp.
 
-Eget bolag / eget repo. **Delar ingen kod med Projekt B (gym-social).**
+## Första versionen
 
-Full spec: [`SPEC.md`](./SPEC.md).
+- Hushållsöversikt med nästa räkning, veckans sysslor och besparingssignal.
+- Räkningar med leverantör, belopp, förfallodatum och betalstatus.
+- Delade sysslor med ansvarig, deadline och återkommande uppgifter.
+- Formulär för manuell registrering direkt i gränssnittet.
+- Supabase-grund för konto, hushåll, medlemmar, räkningar och sysslor.
+- RLS-policyer som begränsar all hushållsdata till dess medlemmar.
+- Demo-läge utan miljövariabler.
+
+Full produktspecifikation: [`SPEC.md`](./SPEC.md).
 
 ## Kom igång
 
-    nvm use 22          # eller senare
-    npm install
-    cp .env.example .env   # fyll i Supabase + FRIDAY-webhook (valfritt)
-    npm run dev
+```bash
+nvm use 22
+npm install
+cp .env.example .env
+npm run dev
+```
 
-Utan `.env` kör appen i **demo-läge** på exempeldata — motorn syns direkt.
+Utan `.env` kör appen på lokal exempeldata. När ett Supabase-projekt är
+anslutet används `VITE_SUPABASE_URL` och `VITE_SUPABASE_ANON_KEY`.
 
-## Kommandon
+## Databasen
 
-| Kommando | Gör |
-|----------|-----|
-| `npm run dev` | Startar dev-servern |
-| `npm test` | Kör besparings-motorns tester (vitest) |
-| `npm run build` | Typecheck + produktionsbygge |
+Den första migreringen finns i
+[`supabase/migrations/20260813210000_initial_schema.sql`](./supabase/migrations/20260813210000_initial_schema.sql).
+Den skapar:
 
-## Arkitektur
+- `profiles`
+- `households`
+- `household_members`
+- `bills`
+- `chores`
+- medlems- och ägarstyrda RLS-policyer
 
-    src/
-      domain/types.ts        Domänmodell (Hushåll, Avtal, Räkning, Förslag)
-      data/marknadssnitt.ts  Riktmärken att jämföra mot (ESTIMAT — verifiera)
-      data/demo.ts           Exempeldata för demo-läge
-      engine/besparingar.ts  Hjärtat: ren regelmotor, inga sidoeffekter
-      lib/supabase.ts        Auth/DB/realtid (no-op utan env)
-      lib/friday.ts          Brygga -> FRIDAY-navet (enkelriktat ut)
-      App.tsx                MVP-yta: besparings-dashboard
+Efter att Supabase CLI är installerat och kontot är anslutet:
 
-## Status
+```bash
+supabase login
+supabase link --project-ref <projekt-id>
+supabase db push
+```
 
-- [x] Repo + stack (Vite + React + TS + Supabase)
-- [x] Besparings-motor (kostnad, bindning, ökning) + 10 tester
-- [x] FRIDAY-brygga (event-payload klar)
-- [x] Demo-dashboard
-- [ ] Supabase-schema + RLS för familjedelning
-- [ ] Räkning-in: mejl-forward + OCR
-- [ ] Riktiga affiliate-länkar (Adtraction/Adservice)
-- [ ] Swish deep-links för räkningsuppdelning
-- [ ] Organizer-ytan (listor/sysslor) - fas 2
+## Kvalitetskontroller
 
-## Viktiga principer
+```bash
+npm run lint
+npm test
+npm run build
+```
 
-- **Ärlighet i copy:** besparingar är märkta *estimat*, aldrig utfall. Vi
-  jämför och länkar - förmedlar aldrig försäkring själva (undviker FI-regler).
-- **Motorn är ren:** ingen Date.now() inuti - `nu` skickas in. Testbart.
+Samma kontroller körs i GitHub Actions för varje pull request och push till
+`main`.
+
+## Viktiga produktprinciper
+
+- Hemma Kollen ska kännas hjälpsam även utan ett partnererbjudande.
+- Besparingar är alltid tydligt märkta som uppskattningar.
+- Tjänsten jämför och länkar men ger inte egen försäkringsrådgivning.
+- Minsta möjliga persondata lagras, och hushåll isoleras med RLS.
+- Appen är fristående och delar inte kod med andra projekt.

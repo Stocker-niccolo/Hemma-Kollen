@@ -1,4 +1,4 @@
-// Besparings-motorn — hjärtat i Hemkoll. RENA funktioner, inga sidoeffekter,
+// Besparings-motorn — hjärtat i Hemma Kollen. RENA funktioner, inga sidoeffekter,
 // ingen Date.now() inuti (skicka in `nu` → deterministiskt + testbart).
 //
 // Motorn tittar på avtal + räkningar, jämför mot marknadssnitt, och returnerar

@@ -1,83 +1,127 @@
-# Hemkoll — Spec (arbetsnamn)
+# Hemma Kollen — produktspecifikation
 
-> Hushållsassistent för svenska hem. Organiserar hushållet (listor, räkningar,
-> sysslor, familjedelning + Swish) — och tjänar pengar på en **proaktiv
-> besparings-motor** som ser i hushållsdatan när det lönar sig att byta
-> el/försäkring/mobil och knuffar användaren i rätt sekund.
+## Produktlöfte
 
-Eget bolag / eget repo. **Delar INGEN kod med Projekt B (gym-social).**
+Hemma Kollen ger svenska hushåll ett gemensamt ställe för det som annars
+försvinner mellan inkorgar, lappar och chattar: räkningar, sysslor, avtal och
+viktiga datum. Appen ska minska vardagsstress först och hitta onödiga kostnader
+som ett extra värde.
 
----
+## Beslutad leveransordning
 
-## Affärsmodellen (var pengarna finns)
+1. Ett versionshanterat GitHub-repo med automatiska kvalitetskontroller.
+2. En säker Supabase-databas för användare och hushållsdata.
+3. En mobilanpassad webbapp som kopplas till databasen.
+4. Fakturaimport och tolkning efter att manuell registrering är stabil.
+5. Partner- och besparingsflöden efter att kärnnyttan är verifierad.
 
-Beprövad svensk modell (Compricer/Elskling/Zmarta/Sambla) men **proaktiv** i
-stället för passiv: appen ser datan och föreslår bytet vid rätt tillfälle.
+## Målgrupp
 
-| Vertikal | Trigger | Intäkt |
-|----------|---------|--------|
-| Elavtal | Räkning ↑ el. avtal löper ut | Affiliate/lead → elleverantör |
-| Försäkring | Premie över marknadssnitt | Lead → jämförare (ej egen förmedling) |
-| Mobil | Bindningstid går ut | Affiliate → operatör |
-| Mat | Handlingsmönster (mkt ICA) | Matkasse/cashback/affiliate |
-| Hantverkare | "X är trasig" | Lead säljs (Offerta-modell) |
+Par, familjer och andra personer som delar ett hem och behöver samsyn kring
+pengar och ansvar utan att införa ännu ett tungt projektverktyg.
 
-**Fas 1:** koppla på *befintliga* affiliate-program (Adtraction/Adservice) —
-ingen egen partner-deal krävs för att börja tjäna.
-**Fas 2:** egna direktavtal när volym finns → bättre marginal.
+## MVP-flöde
 
-### ⚠️ Regulatorisk linje (design-in från dag 1)
-- **Vi förmedlar INTE försäkring** (undviker Finansinspektionens
-  förmedlingsregler). Vi **jämför och länkar** till licensierade parter —
-  precis som Compricer.
-- Håll all copy på jämför-sidan av linjen. Aldrig "vi rekommenderar", alltid
-  "vi hittade ett alternativ hos X".
+1. Användaren skapar konto via en e-postlänk.
+2. Användaren skapar eller ansluter till ett hushåll.
+3. Hushållet registrerar en räkning eller syssla manuellt.
+4. Alla medlemmar ser samma uppdaterade översikt.
+5. En medlem markerar räkningen betald eller sysslan klar.
+6. Hemma Kollen visar nästa viktiga datum och veckans framsteg.
+7. När tillräcklig kostnadsdata finns visas ett transparent besparingsförslag.
 
----
+## Ingår i första byggfasen
 
-## Datakälla (det verkligt svåra)
+- E-postbaserad autentisering.
+- Ett hushåll och flera medlemmar.
+- Medlemsrollerna ägare och medlem.
+- Räkningar: leverantör, kategori, belopp, förfallodatum och status.
+- Sysslor: titel, ansvarig, deadline, status och enkel återkomst.
+- Översikt, räkningar och sysslor som separata mobilanpassade vyer.
+- Manuell inmatning som alltid fungerande reservväg.
+- Supabase RLS, tidsstämplar och grundläggande datavalidering.
+- Demo-läge när backend saknas.
+- Lint, tester, produktionsbygge och GitHub Actions.
 
-Hela värdet kräver att motorn *ser* räkningarna. Startordning:
+## Nästa byggfas
 
-1. **Mejl-forwarding + OCR** ← MVP. Användaren vidarebefordrar räkningar till en
-   inbox, vi läser av belopp + förfallodag + leverantör. Ingen partner behövs.
-2. **Manuell inmatning** — fallback, ger data direkt.
-3. **Open Banking (Tink/GoCardless)** — fas 2, transaktionsdata, kräver
-   licensierad leverantör + samtycke.
-4. **Kivra** — rätt guldgruva men inget öppet konsument-API. Bevakas.
+- Inbjudningar till hushåll.
+- Uppladdning av PDF eller bild på räkning.
+- Extraktion av leverantör, belopp och förfallodatum.
+- Rättningsvy innan importerade uppgifter sparas.
+- Dokumentöversikt och påminnelser.
+- Partnerlänk, attribution och händelsemätning.
 
----
+## Inte i första versionen
 
-## Swish
+- Open Banking eller automatisk bankåtkomst.
+- Kivra-integration.
+- Automatisk Swish-bekräftelse.
+- Egen försäkringsrådgivning eller försäkringsförmedling.
+- Betalabonnemang.
+- Mat-, hantverkar- eller marknadsplatsfunktioner.
+- Avancerad AI-chat.
 
-Inget officiellt API för privatpersons-Swish. Vi kör **Swish-deep-links**:
-appen skapar en färdig betalning (belopp + nummer + meddelande), knuffar till
-Swish-appen. Ingen auto-bekräftelse → "markera som betald" + påminnelser.
-Riktig Swish Handel (auto-bekräftat) kräver org.nr — flaggat, ej i MVP.
+## Datamodell
 
----
+### Profil
 
-## MVP-scope
+Kopplas 1:1 till Supabase Auth. Innehåller endast visningsnamn och tekniska
+tidsstämplar.
 
-**Hjärta = besparings-motorn** (el + försäkring först). Byggs innan
-organizer-ytan.
+### Hushåll och medlemskap
 
-1. Hushåll + medlemmar (auth, delning)
-2. Räkningar in (mejl-forward/OCR → manuell fallback)
-3. Besparings-motor: regelmotor som flaggar bytesmöjligheter + affiliate-länk
-4. FRIDAY-notis: "3 obetalda räkningar + 1 besparing (~4 000 kr/år) denna vecka"
+Varje hushåll har en skapare. Medlemskapet binder användaren till hushållet och
+styr om personen är ägare eller medlem. Ägare administrerar hushållet;
+medlemmar arbetar med dess vardagsdata.
 
-**Fas 2:** delade listor (handling/sysslor), Swish-uppdelning, geofencing ej
-relevant här, Open Banking, fler vertikaler.
+### Räkning
 
----
+Tillhör exakt ett hushåll. Kärnfält är leverantör, kategori, belopp,
+förfallodatum, status och källa. Källan visar om uppgifterna är manuella,
+OCR-tolkade eller senare kommer från Open Banking.
 
-## Stack
-- Vite + React + TypeScript
-- Supabase (auth, Postgres, realtid, RLS för familjedelning)
-- Besparings-motor = rena TS-funktioner (testbara, inga sidoeffekter)
-- FRIDAY-brygga = outbound (appen → FRIDAY-navet), alt. 3 i FRIDAY-modellen
+### Syssla
 
-## FRIDAY-koppling (alt. 3 — fristående, pratar med navet)
-Appen POST:ar events till FRIDAY (obetalda räkningar, nya besparingar) som dyker
-upp i morgonbriefen. Enkelriktat ut. Ingen delad kod med FRIDAY-repot.
+Tillhör exakt ett hushåll. Kärnfält är titel, ansvarig, deadline, status,
+kategori och eventuell återkomst.
+
+## Behörighet och integritet
+
+- All hushållsdata har RLS aktiverat.
+- Endast hushållets medlemmar får läsa och ändra räkningar och sysslor.
+- Endast ägare får administrera hushåll och medlemskap.
+- En medlem får inte läsa eller gissa data från ett annat hushåll.
+- Klienten använder endast publik URL och anon key; service role key får aldrig
+  exponeras i webbläsaren.
+- Export, fullständig radering och lagringstider specificeras innan publik beta.
+
+## Besparingsmotorn
+
+Motorn är deterministisk och får datum injicerat för testbarhet. Den kan reagera
+på kostnad över ett verifierat riktmärke, tydlig prisökning eller ett avtal som
+snart löper ut. Alla belopp presenteras som uppskattningar och med synliga
+antaganden.
+
+Regulatorisk copy säger exempelvis **”vi hittade ett alternativ hos X”**. Den
+säger aldrig **”vi rekommenderar”** när försäkring berörs.
+
+## Acceptanskriterier för byggstarten
+
+- [x] Produktnamnet är Hemma Kollen i klient och dokumentation.
+- [x] Webbappen har fungerande vyer för översikt, räkningar och sysslor.
+- [x] Räkningar och sysslor kan läggas till och ändra status i demo-läge.
+- [x] Databasmigrering med RLS finns versionshanterad.
+- [x] GitHub Actions-konfiguration finns.
+- [x] Test, lint och produktionsbygge passerar lokalt.
+- [ ] GitHub-repot är skapat och den lokala historiken är pushad.
+- [ ] Supabase-projektet är skapat, länkat och migreringen är applicerad.
+- [ ] Miljövariabler är kopplade till en publicerad webbversion.
+
+## Mätetal inför beta
+
+- Minst 80 % klarar att lägga till en räkning utan instruktion.
+- Tid till första sparade hushållspost är under två minuter.
+- Minst 90 % av manuellt eller automatiskt tolkade kärnfält är korrekta efter
+  användarens rättning.
+- Inga kritiska data- eller behörighetsincidenter.

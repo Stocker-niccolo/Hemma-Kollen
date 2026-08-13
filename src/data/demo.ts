@@ -1,6 +1,6 @@
 // Demo-data så UI kan köras utan backend. Ersätts av Supabase-hämtning.
 
-import type { Avtal, Rakning } from "../domain/types";
+import type { Avtal, Rakning, Syssla } from "../domain/types";
 
 export const DEMO_HUSHALL = "demo-hushall";
 
@@ -48,7 +48,7 @@ export const DEMO_RAKNINGAR: Rakning[] = [
     vertikal: "el",
     leverantor: "Dyr El AB",
     belopp: 980,
-    forfallodatum: "2026-06-28",
+    forfallodatum: "2026-08-18",
     betald: false,
     kalla: "ocr",
   },
@@ -58,8 +58,49 @@ export const DEMO_RAKNINGAR: Rakning[] = [
     vertikal: "forsakring",
     leverantor: "Trygg Hem Försäkring",
     belopp: 540,
-    forfallodatum: "2026-07-25",
+    forfallodatum: "2026-08-22",
     betald: false,
     kalla: "manuell",
+  },
+];
+
+export const DEMO_SYSSLOR: Syssla[] = [
+  {
+    id: "s-tvatt",
+    hushallId: DEMO_HUSHALL,
+    titel: "Boka tvättstugan",
+    ansvarig: "Niccolò",
+    forfallodatum: "2026-08-14",
+    klar: false,
+    kategori: "hem",
+  },
+  {
+    id: "s-vaxter",
+    hushallId: DEMO_HUSHALL,
+    titel: "Vattna växterna",
+    ansvarig: "Anna",
+    forfallodatum: "2026-08-15",
+    klar: false,
+    kategori: "hem",
+    aterkommer: "varje_vecka",
+  },
+  {
+    id: "s-handla",
+    hushallId: DEMO_HUSHALL,
+    titel: "Handla till helgen",
+    ansvarig: "Niccolò",
+    forfallodatum: "2026-08-16",
+    klar: true,
+    kategori: "inkop",
+  },
+  {
+    id: "s-badrum",
+    hushallId: DEMO_HUSHALL,
+    titel: "Städa badrummet",
+    ansvarig: "Anna",
+    forfallodatum: "2026-08-17",
+    klar: false,
+    kategori: "stadning",
+    aterkommer: "varje_vecka",
   },
 ];

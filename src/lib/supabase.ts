@@ -12,3 +12,16 @@ export const harSupabase = Boolean(url && anonKey);
 export const supabase = harSupabase
   ? createClient(url!, anonKey!)
   : null;
+
+export async function loggaInMedEpost(epost: string) {
+  if (!supabase) throw new Error("Supabase är inte konfigurerat ännu.");
+  return supabase.auth.signInWithOtp({
+    email: epost,
+    options: { emailRedirectTo: window.location.origin },
+  });
+}
+
+export async function loggaUt() {
+  if (!supabase) return;
+  await supabase.auth.signOut();
+}

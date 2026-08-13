@@ -1,4 +1,4 @@
-// Domänmodell för Hemkoll. Håll den fri från UI och Supabase-detaljer.
+// Domänmodell för Hemma Kollen. Håll den fri från UI och Supabase-detaljer.
 
 export type Vertikal = "el" | "forsakring" | "mobil" | "mat" | "hantverk";
 
@@ -40,6 +40,18 @@ export interface Rakning {
   forfallodatum: string; // ISO
   betald: boolean;
   kalla: "ocr" | "manuell" | "open_banking";
+}
+
+/** En återkommande eller enstaka syssla i hushållet. */
+export interface Syssla {
+  id: string;
+  hushallId: string;
+  titel: string;
+  ansvarig: string;
+  forfallodatum: string; // ISO
+  klar: boolean;
+  kategori: "stadning" | "hem" | "inkop" | "ovrigt";
+  aterkommer?: "varje_vecka" | "varannan_vecka" | "varje_manad";
 }
 
 /** Ett förslag från besparings-motorn. Aldrig "rekommendation" i copy — jämför. */

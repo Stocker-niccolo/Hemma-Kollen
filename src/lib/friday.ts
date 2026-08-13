@@ -1,8 +1,8 @@
-// FRIDAY-bryggan (alt. 3: Hemkoll är fristående och POST:ar events till
+// FRIDAY-bryggan (alt. 3: Hemma Kollen är fristående och POST:ar events till
 // FRIDAY-navet). Enkelriktat ut. Ingen delad kod med FRIDAY-repot.
 //
 // FRIDAY plockar upp dessa i morgonbriefen, t.ex.:
-//   "Hemkoll: 3 obetalda räkningar förfaller denna vecka + 1 besparing (~4 000 kr/år)"
+//   "Hemma Kollen: 3 obetalda räkningar förfaller denna vecka + 1 besparing (~4 000 kr/år)"
 
 import type { Besparingsforslag, Rakning } from "../domain/types";
 import { totalArsbesparing } from "../engine/besparingar";
@@ -11,8 +11,8 @@ const FRIDAY_URL = import.meta.env.VITE_FRIDAY_WEBHOOK_URL as
   | string
   | undefined;
 
-export interface FridayHemkollEvent {
-  kalla: "hemkoll";
+export interface FridayHemmaKollenEvent {
+  kalla: "hemma_kollen";
   hushallId: string;
   obetaldaRakningar: number;
   obetaltBelopp: number;
@@ -26,10 +26,10 @@ export function byggFridayEvent(
   hushallId: string,
   rakningar: Rakning[],
   forslag: Besparingsforslag[],
-): FridayHemkollEvent {
+): FridayHemmaKollenEvent {
   const obetalda = rakningar.filter((r) => !r.betald);
   return {
-    kalla: "hemkoll",
+    kalla: "hemma_kollen",
     hushallId,
     obetaldaRakningar: obetalda.length,
     obetaltBelopp: obetalda.reduce((s, r) => s + r.belopp, 0),
@@ -41,7 +41,7 @@ export function byggFridayEvent(
 
 /** Skickar event till FRIDAY-navet. No-op om webhook-url saknas. */
 export async function skickaTillFriday(
-  event: FridayHemkollEvent,
+  event: FridayHemmaKollenEvent,
 ): Promise<boolean> {
   if (!FRIDAY_URL) {
     console.info("[friday] webhook ej konfigurerad, hoppar över", event);

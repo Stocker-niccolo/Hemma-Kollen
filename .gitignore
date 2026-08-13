@@ -26,3 +26,7 @@ dist-ssr
 # lokala env-filer
 .env
 .env.local
+
+# Supabase lokal utveckling
+.supabase/
+supabase/.temp/
