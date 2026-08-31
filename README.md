@@ -6,7 +6,8 @@ och säger till när det är läge att agera.
 
 **Styrande dokument:** [`docs/HANDOFF.md`](./docs/HANDOFF.md) — läs den innan du
 föreslår funktioner, design, arkitektur eller prioriteringar. `SPEC.md` beskriver
-den byggda första versionen.
+den byggda första versionen. [`docs/BESLUT.md`](./docs/BESLUT.md) är
+beslutsliggaren: vad som är beslutat, rekommenderat och öppet, plus ägarsteg.
 
 Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/> — publik
 landningssida med interaktiv demo (fiktiv data).
@@ -78,11 +79,7 @@ npm run build
 ```
 
 Samma kontroller körs i GitHub Actions för varje pull request och push till
-`main`.
-
-Produktionsbygget kompletteras automatiskt med en liten Worker-ingång och
-hostingmetadata för OpenAI Sites. Appens vanliga Vite-utvecklingsflöde är
-oförändrat.
+`main`. Varje push till `main` publicerar även webbversionen via GitHub Pages.
 
 ## Viktiga produktprinciper
 
