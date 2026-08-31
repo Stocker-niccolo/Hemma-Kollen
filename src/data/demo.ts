@@ -1,8 +1,17 @@
 // Demo-data så UI kan köras utan backend. Ersätts av Supabase-hämtning.
+// All data är helt fiktiv (se handoffens arbetsprinciper) och datumen räknas
+// relativt dagens datum så demon alltid känns levande.
 
 import type { Avtal, Hushallsavtal, Inkopsvara, Rakning, Syssla } from "../domain/types";
 
 export const DEMO_HUSHALL = "demo-hushall";
+export const DEMO_HUSHALLSNAMN = "Familjen Ek";
+export const DEMO_MEDLEM = "Alex";
+
+function omDagar(antal: number): string {
+  const datum = new Date(Date.now() + antal * 86_400_000);
+  return datum.toISOString().slice(0, 10);
+}
 
 export const DEMO_AVTAL: Avtal[] = [
   {
@@ -11,7 +20,7 @@ export const DEMO_AVTAL: Avtal[] = [
     vertikal: "el",
     leverantor: "Dyr El AB",
     manadskostnad: 980,
-    bindningTill: "2026-09-10",
+    bindningTill: omDagar(21),
     meta: { forbrukningKwh: 1600 },
   },
   {
@@ -27,38 +36,38 @@ export const DEMO_AVTAL: Avtal[] = [
     vertikal: "mobil",
     leverantor: "Operatören",
     manadskostnad: 210,
-    bindningTill: "2026-08-15",
+    bindningTill: omDagar(48),
   },
 ];
 
 export const DEMO_RAKNINGAR: Rakning[] = [
   {
-    id: "r-el-maj",
+    id: "r-el-forra",
     hushallId: DEMO_HUSHALL,
     vertikal: "el",
     leverantor: "Dyr El AB",
     belopp: 760,
-    forfallodatum: "2026-05-28",
+    forfallodatum: omDagar(-14),
     betald: true,
     kalla: "ocr",
   },
   {
-    id: "r-el-jun",
+    id: "r-el-nasta",
     hushallId: DEMO_HUSHALL,
     vertikal: "el",
     leverantor: "Dyr El AB",
     belopp: 980,
-    forfallodatum: "2026-08-18",
+    forfallodatum: omDagar(5),
     betald: false,
     kalla: "ocr",
   },
   {
-    id: "r-fs-jul",
+    id: "r-fs-nasta",
     hushallId: DEMO_HUSHALL,
     vertikal: "forsakring",
     leverantor: "Trygg Hem Försäkring",
     belopp: 540,
-    forfallodatum: "2026-08-22",
+    forfallodatum: omDagar(9),
     betald: false,
     kalla: "manuell",
   },
@@ -69,8 +78,8 @@ export const DEMO_SYSSLOR: Syssla[] = [
     id: "s-tvatt",
     hushallId: DEMO_HUSHALL,
     titel: "Boka tvättstugan",
-    ansvarig: "Niccolò",
-    forfallodatum: "2026-08-14",
+    ansvarig: "Alex",
+    forfallodatum: omDagar(1),
     klar: false,
     kategori: "hem",
   },
@@ -78,8 +87,8 @@ export const DEMO_SYSSLOR: Syssla[] = [
     id: "s-vaxter",
     hushallId: DEMO_HUSHALL,
     titel: "Vattna växterna",
-    ansvarig: "Anna",
-    forfallodatum: "2026-08-15",
+    ansvarig: "Kim",
+    forfallodatum: omDagar(2),
     klar: false,
     kategori: "hem",
     aterkommer: "varje_vecka",
@@ -88,8 +97,8 @@ export const DEMO_SYSSLOR: Syssla[] = [
     id: "s-handla",
     hushallId: DEMO_HUSHALL,
     titel: "Handla till helgen",
-    ansvarig: "Niccolò",
-    forfallodatum: "2026-08-16",
+    ansvarig: "Alex",
+    forfallodatum: omDagar(3),
     klar: true,
     kategori: "inkop",
   },
@@ -97,8 +106,8 @@ export const DEMO_SYSSLOR: Syssla[] = [
     id: "s-badrum",
     hushallId: DEMO_HUSHALL,
     titel: "Städa badrummet",
-    ansvarig: "Anna",
-    forfallodatum: "2026-08-17",
+    ansvarig: "Kim",
+    forfallodatum: omDagar(4),
     klar: false,
     kategori: "stadning",
     aterkommer: "varje_vecka",
@@ -113,13 +122,12 @@ export const DEMO_INKOP: Inkopsvara[] = [
 ];
 
 export const DEMO_HUSHALLSAVTAL: Hushallsavtal[] = [
-  { id: "a-hem", hushallId: DEMO_HUSHALL, kategori: "forsakring", underkategori: "Hem", namn: "Hemförsäkring", leverantor: "Trygg Hem", manadskostnad: 249, fornyasDatum: "2026-10-01", status: "aktivt" },
-  { id: "a-bil", hushallId: DEMO_HUSHALL, kategori: "forsakring", underkategori: "Bil", namn: "Bilförsäkring", leverantor: "Säker Bil", manadskostnad: 579, fornyasDatum: "2026-09-18", status: "aktivt" },
+  { id: "a-hem", hushallId: DEMO_HUSHALL, kategori: "forsakring", underkategori: "Hem", namn: "Hemförsäkring", leverantor: "Trygg Hem", manadskostnad: 249, fornyasDatum: omDagar(31), status: "aktivt" },
+  { id: "a-bil", hushallId: DEMO_HUSHALL, kategori: "forsakring", underkategori: "Bil", namn: "Bilförsäkring", leverantor: "Säker Bil", manadskostnad: 579, fornyasDatum: omDagar(18), status: "aktivt" },
   { id: "a-djur", hushallId: DEMO_HUSHALL, kategori: "forsakring", underkategori: "Djur", namn: "Hundförsäkring", leverantor: "Djurtrygg", manadskostnad: 319, status: "aktivt" },
-  { id: "a-bredband", hushallId: DEMO_HUSHALL, kategori: "bredband", namn: "Fiber 500", leverantor: "Bahnhof", manadskostnad: 449, status: "aktivt" },
-  { id: "a-stream", hushallId: DEMO_HUSHALL, kategori: "streaming_tv", namn: "Film & TV", leverantor: "Netflix", manadskostnad: 149, status: "aktivt" },
-  { id: "a-mobil", hushallId: DEMO_HUSHALL, kategori: "mobil", namn: "Mobil 30 GB", leverantor: "Operatören", manadskostnad: 210, fornyasDatum: "2026-08-15", status: "aktivt" },
-  { id: "a-el", hushallId: DEMO_HUSHALL, kategori: "el", namn: "Rörligt elavtal", leverantor: "Dyr El AB", manadskostnad: 980, fornyasDatum: "2026-09-10", status: "aktivt" },
-  { id: "a-vatten", hushallId: DEMO_HUSHALL, kategori: "vatten", namn: "Vatten & avlopp", leverantor: "Kommunen", manadskostnad: 340, status: "aktivt" },
-  { id: "a-gym", hushallId: DEMO_HUSHALL, kategori: "gym", namn: "Gymkort", leverantor: "Nordic Wellness", manadskostnad: 399, fornyasDatum: "2026-12-01", status: "aktivt" },
+  { id: "a-bredband", hushallId: DEMO_HUSHALL, kategori: "bredband", namn: "Fiber 500", leverantor: "Snabbnät", manadskostnad: 449, status: "aktivt" },
+  { id: "a-stream", hushallId: DEMO_HUSHALL, kategori: "streaming_tv", namn: "Film & TV", leverantor: "Streamly", manadskostnad: 149, status: "aktivt" },
+  { id: "a-mobil", hushallId: DEMO_HUSHALL, kategori: "mobil", namn: "Mobil 20 GB", leverantor: "Operatören", manadskostnad: 210, fornyasDatum: omDagar(48), status: "aktivt" },
+  { id: "a-el", hushallId: DEMO_HUSHALL, kategori: "el", namn: "Rörligt elavtal", leverantor: "Dyr El AB", manadskostnad: 980, fornyasDatum: omDagar(21), status: "aktivt" },
+  { id: "a-gym", hushallId: DEMO_HUSHALL, kategori: "gym", namn: "Träningskort", leverantor: "Formtoppen", manadskostnad: 399, status: "aktivt" },
 ];

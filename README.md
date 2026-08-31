@@ -1,10 +1,15 @@
-# Hemma Kollen
+# CasaVita (fd Hemma Kollen)
 
-Ett gemensamt nav för vardagen hemma. Hemma Kollen samlar räkningar, sysslor,
-inköp, avtal, viktiga datum och möjliga besparingar i en lugn, mobilanpassad
-webbapp.
+Din digitala hemmapartner. CasaVita samlar hushållets återkommande kostnader,
+avtal, räkningar, sysslor och viktiga datum i en lugn, mobilanpassad webbapp —
+och säger till när det är läge att agera.
 
-Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/>
+**Styrande dokument:** [`docs/HANDOFF.md`](./docs/HANDOFF.md) — läs den innan du
+föreslår funktioner, design, arkitektur eller prioriteringar. `SPEC.md` beskriver
+den byggda första versionen.
+
+Webbversion: <https://stocker-niccolo.github.io/Hemma-Kollen/> — publik
+landningssida med interaktiv demo (fiktiv data).
 
 ## Första versionen
 
@@ -81,7 +86,7 @@ oförändrat.
 
 ## Viktiga produktprinciper
 
-- Hemma Kollen ska kännas hjälpsam även utan ett partnererbjudande.
+- CasaVita ska kännas hjälpsam även utan ett partnererbjudande.
 - Besparingar är alltid tydligt märkta som uppskattningar.
 - Tjänsten jämför och länkar men ger inte egen försäkringsrådgivning.
 - Minsta möjliga persondata lagras, och hushåll isoleras med RLS.

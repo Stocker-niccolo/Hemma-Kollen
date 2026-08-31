@@ -1,4 +1,4 @@
-// Domänmodell för Hemma Kollen. Håll den fri från UI och Supabase-detaljer.
+// Domänmodell för CasaVita. Håll den fri från UI och Supabase-detaljer.
 
 export type Vertikal = "el" | "forsakring" | "mobil" | "mat" | "hantverk";
 

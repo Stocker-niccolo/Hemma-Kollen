@@ -3,7 +3,9 @@ import {
   DEMO_AVTAL,
   DEMO_HUSHALL,
   DEMO_HUSHALLSAVTAL,
+  DEMO_HUSHALLSNAMN,
   DEMO_INKOP,
+  DEMO_MEDLEM,
   DEMO_RAKNINGAR,
   DEMO_SYSSLOR,
 } from "./data/demo";
@@ -113,10 +115,11 @@ export default function App() {
   const [notis, setNotis] = useState<string | null>(null);
   const [authKontrollerad, setAuthKontrollerad] = useState(!harSupabase);
   const [anvandarId, setAnvandarId] = useState<string | null>(null);
-  const [visningsnamn, setVisningsnamn] = useState("Niccolò");
+  const [visningsnamn, setVisningsnamn] = useState(DEMO_MEDLEM);
   const [hushallId, setHushallId] = useState(harSupabase ? "" : DEMO_HUSHALL);
-  const [hushallsnamn, setHushallsnamn] = useState("Familjen Stocker");
+  const [hushallsnamn, setHushallsnamn] = useState(DEMO_HUSHALLSNAMN);
   const [dataKalla, setDataKalla] = useState<DataKalla>(harSupabase ? "synkar" : "demo");
+  const [visaLanding, setVisaLanding] = useState(true);
 
   useEffect(() => {
     const klient = supabase;
@@ -149,6 +152,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (anvandarId) setVisaLanding(false);
+  }, [anvandarId]);
+
+  useEffect(() => {
     if (!harSupabase || !anvandarId) return;
     let aktiv = true;
     setDataKalla("synkar");
@@ -174,7 +181,7 @@ export default function App() {
         console.error("Kunde inte synka hushållet", error);
         if (!aktiv) return;
         setHushallId(DEMO_HUSHALL);
-        setHushallsnamn("Familjen Stocker");
+        setHushallsnamn(DEMO_HUSHALLSNAMN);
         setRakningar(DEMO_RAKNINGAR);
         setSysslor(DEMO_SYSSLOR);
         setInkop(DEMO_INKOP);
@@ -368,7 +375,11 @@ export default function App() {
   }
 
   if (harSupabase && !authKontrollerad) {
-    return <LoadingScreen text="Öppnar Hemma Kollen…" />;
+    return <LoadingScreen text="Öppnar CasaVita…" />;
+  }
+
+  if (visaLanding && !anvandarId) {
+    return <Landing onEnter={() => setVisaLanding(false)} harSupabase={harSupabase} />;
   }
 
   if (harSupabase && !anvandarId) {
@@ -383,8 +394,8 @@ export default function App() {
     <div className="app-shell">
       <aside className="sidebar" aria-label="Huvudmeny">
         <button className="brand" onClick={() => bytVy("oversikt")}>
-          <span className="brand-mark" aria-hidden="true">H</span>
-          <span>Hemma Kollen</span>
+          <span className="brand-mark" aria-hidden="true">C</span>
+          <span>CasaVita</span>
         </button>
 
         <nav className="desktop-nav">
@@ -403,7 +414,7 @@ export default function App() {
 
         <div className="sidebar-bottom">
           <div className="household-switcher">
-            <span className="avatar">NS</span>
+            <span className="avatar">{visningsnamn.slice(0, 2).toUpperCase()}</span>
             <span><strong>{hushallsnamn}</strong><small>{dataKalla === "live" ? "Synkat hushåll" : "2 medlemmar"}</small></span>
             <span aria-hidden="true">⌄</span>
           </div>
@@ -411,6 +422,11 @@ export default function App() {
             <span aria-hidden="true">●</span>
             Dina uppgifter stannar i hushållet.
           </div>
+          {!anvandarId && (
+            <button className="landing-return" onClick={() => setVisaLanding(true)}>
+              ‹ Om CasaVita
+            </button>
+          )}
         </div>
       </aside>
 
@@ -488,7 +504,7 @@ export default function App() {
         <div className="modal-backdrop" role="presentation" onMouseDown={() => setFormular(null)}>
           <section className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onMouseDown={(e) => e.stopPropagation()}>
             <button className="modal-close" aria-label="Stäng" onClick={() => setFormular(null)}>×</button>
-            <p className="eyebrow">Familjen Stocker</p>
+            <p className="eyebrow">{hushallsnamn}</p>
             <h2 id="modal-title">
               {formular === "rakning" ? "Lägg till räkning" : formular === "syssla" ? "Ny syssla" : formular === "inkop" ? "Lägg till inköp" : "Lägg till avtal"}
             </h2>
@@ -519,11 +535,129 @@ export default function App() {
   );
 }
 
+function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: boolean }) {
+  const ctaText = harSupabase ? "Logga in" : "Utforska demon";
+
+  return (
+    <div className="landing">
+      <header className="landing-header">
+        <div className="landing-brand">
+          <span className="brand-mark" aria-hidden="true">C</span>
+          <span>CasaVita</span>
+        </div>
+        <nav className="landing-nav" aria-label="Sidmeny">
+          <a href="#sa-funkar-det">Så funkar det</a>
+          <a href="#transparens">Transparens</a>
+          <button className="primary-button" onClick={onEnter}>{ctaText}</button>
+        </nav>
+      </header>
+
+      <main>
+        <section className="landing-hero">
+          <div className="landing-hero-copy">
+            <span className="welcome-kicker">Din digitala hemmapartner · Kostnadsfritt</span>
+            <h1>Samla ditt hem.<br />Få koll. Spara pengar.</h1>
+            <p>
+              CasaVita samlar hushållets återkommande kostnader, avtal och viktiga datum
+              på ett ställe — och säger till när det är läge att agera. Innan bindningstiden
+              löper ut. Innan provperioden börjar kosta. Innan räkningen förfaller.
+            </p>
+            <div className="quick-actions">
+              <button className="primary-button" onClick={onEnter}>{ctaText} →</button>
+              <a className="secondary-button landing-secondary" href="#sa-funkar-det">Så funkar det</a>
+            </div>
+            <small className="landing-hero-note">Gratis för dig som användare. Inga kortuppgifter. Ingen bankinloggning.</small>
+          </div>
+          <div className="home-illustration landing-illustration" aria-hidden="true">
+            <div className="sun" />
+            <div className="cloud cloud-one" />
+            <div className="cloud cloud-two" />
+            <div className="house"><span className="roof" /><span className="door" /><span className="window" /></div>
+            <div className="shrub shrub-one" /><div className="shrub shrub-two" />
+          </div>
+        </section>
+
+        <section className="landing-insight" aria-label="Exempel på insikt">
+          <article className="insight-card">
+            <span className="insight-badge">Exempel på hur CasaVita säger till</span>
+            <h2>Din elkostnad har ökat tre månader i rad — och avtalet löper ut om 21 dagar.</h2>
+            <p>
+              Det kan vara ett bra tillfälle att jämföra alternativ. En möjlig besparing är
+              cirka 180 kr per månad.
+            </p>
+            <small>Om du tecknar ett avtal via CasaVita kan vi få ersättning från leverantören. Det påverkar inte ditt pris — och vi säger alltid till.</small>
+          </article>
+        </section>
+
+        <section className="landing-pillars" id="sa-funkar-det">
+          <h2 className="landing-section-title">Vad CasaVita gör för ditt hushåll</h2>
+          <div className="pillar-grid">
+            <article className="pillar-card">
+              <span className="stat-icon green" aria-hidden="true">▤</span>
+              <h3>Hela bilden av vad hemmet kostar</h3>
+              <p>
+                El, försäkringar, mobil, bredband, streaming, gym — se den totala
+                månadskostnaden, vad som förändrats och vad som förfaller härnäst.
+              </p>
+            </article>
+            <article className="pillar-card">
+              <span className="stat-icon coral" aria-hidden="true">◇</span>
+              <h3>Påminnelser när det faktiskt spelar roll</h3>
+              <p>
+                Bindningstider, uppsägningsfönster och förfallodatum bevakas åt dig.
+                CasaVita säger till i rätt tid — inte efteråt.
+              </p>
+            </article>
+            <article className="pillar-card">
+              <span className="stat-icon gold" aria-hidden="true">↗</span>
+              <h3>Begripliga förslag, aldrig påtryckningar</h3>
+              <p>
+                När något ser dyrt ut förklarar vi varför, vad du kan göra och vad du
+                ungefär kan spara. Alla belopp är tydligt märkta som uppskattningar.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="landing-steps">
+          <h2 className="landing-section-title">Så kommer du igång</h2>
+          <ol className="step-list">
+            <li><strong>Skapa ditt hushåll.</strong> Ensam, som par eller familj — bjud in vem du vill.</li>
+            <li><strong>Lägg in dina kostnader och avtal.</strong> Några minuter räcker för en första överblick.</li>
+            <li><strong>Luta dig tillbaka.</strong> CasaVita håller koll och säger till när något behöver din uppmärksamhet.</li>
+          </ol>
+        </section>
+
+        <section className="landing-transparency" id="transparens">
+          <h2 className="landing-section-title">Gratis — och ärligt om varför</h2>
+          <p>
+            CasaVita kostar ingenting för dig. Om du väljer att gå vidare med ett erbjudande
+            från en partner kan vi få ersättning från leverantören. Det påverkar aldrig ditt
+            pris, det märks alltid ut tydligt, och vi visar aldrig ett erbjudande bara för
+            att ersättningen är hög. Dina uppgifter säljs inte vidare.
+          </p>
+        </section>
+
+        <section className="landing-cta">
+          <h2>Nyfiken på hur det känns?</h2>
+          <p>Utforska demon med ett fiktivt hushåll — inga konton, ingen registrering.</p>
+          <button className="primary-button" onClick={onEnter}>{ctaText} →</button>
+        </section>
+      </main>
+
+      <footer className="landing-footer">
+        <span>© {new Date().getFullYear()} CasaVita</span>
+        <span>Under utveckling — sluten beta öppnar snart.</span>
+      </footer>
+    </div>
+  );
+}
+
 function LoadingScreen({ text }: { text: string }) {
   return (
     <main className="auth-screen">
       <div className="auth-card loading-card" role="status">
-        <span className="auth-brand-mark" aria-hidden="true">H</span>
+        <span className="auth-brand-mark" aria-hidden="true">C</span>
         <div className="loading-dot" aria-hidden="true" />
         <p>{text}</p>
       </div>
@@ -555,8 +689,8 @@ function LoginScreen() {
     <main className="auth-screen">
       <section className="auth-card">
         <div className="auth-brand">
-          <span className="auth-brand-mark" aria-hidden="true">H</span>
-          <span>Hemma Kollen</span>
+          <span className="auth-brand-mark" aria-hidden="true">C</span>
+          <span>CasaVita</span>
         </div>
         <p className="eyebrow">Välkommen hem</p>
         <h1>Logga in utan lösenord.</h1>
@@ -618,7 +752,11 @@ function Overview({ nastaRakning, obetalda, oppnaSysslor, sysslor, inkop, hushal
         <div className="welcome-copy">
           <span className="welcome-kicker">Läget hemma</span>
           <h2>Allt viktigt,<br />på ett ställe.</h2>
-          <p>Ni har bra koll. En räkning förfaller snart och tre sysslor väntar den här veckan.</p>
+          <p>
+            {obetalda.length === 0 && oppnaSysslor.length === 0
+              ? "Ni har full koll. Inget väntar just nu."
+              : `Ni har bra koll. ${obetalda.length === 1 ? "En räkning" : `${obetalda.length} räkningar`} att betala och ${oppnaSysslor.length === 1 ? "en syssla" : `${oppnaSysslor.length} sysslor`} kvar den här veckan.`}
+          </p>
           <div className="quick-actions">
             <button className="primary-button" onClick={() => onOpenForm("rakning")}>+ Lägg till räkning</button>
             <button className="secondary-button" onClick={() => onOpenForm("inkop")}>+ Lägg till inköp</button>
@@ -705,7 +843,7 @@ function Overview({ nastaRakning, obetalda, oppnaSysslor, sysslor, inkop, hushal
             <p>{forslag[0]?.anledning ?? "Vi fortsätter hålla koll och säger till när något förändras."}</p>
           </div>
           {forslag[0] && <a href={forslag[0].affiliateUrl} target="_blank" rel="noreferrer">Se jämförelsen →</a>}
-          <small>Uppskattning baserad på generell marknadsdata. Hemma Kollen förmedlar inte avtal.</small>
+          <small>Uppskattning baserad på generell marknadsdata. CasaVita förmedlar inte avtal och märker alltid ut när vi kan få ersättning.</small>
         </section>
       </div>
     </>
@@ -733,7 +871,7 @@ function Bills({ rakningar, onToggle, onAdd }: { rakningar: Rakning[]; onToggle:
 }
 
 function Chores({ sysslor, onToggle, onAdd }: { sysslor: Syssla[]; onToggle: (id: string) => void; onAdd: () => void }) {
-  const personer = ["Alla", "Niccolò", "Anna"];
+  const personer = ["Alla", ...new Set(sysslor.map((syssla) => syssla.ansvarig))];
   const [filter, setFilter] = useState("Alla");
   const filtrerade = filter === "Alla" ? sysslor : sysslor.filter((syssla) => syssla.ansvarig === filter);
   return (
@@ -871,7 +1009,7 @@ function ChoreForm({ onSubmit }: { onSubmit: (event: FormEvent<HTMLFormElement>)
   return (
     <form className="form" onSubmit={onSubmit}>
       <label>Vad ska göras?<input name="titel" placeholder="Till exempel dammsuga" required /></label>
-      <div className="form-row"><label>Ansvarig<select name="ansvarig" defaultValue="Niccolò"><option>Niccolò</option><option>Anna</option></select></label><label>Klart senast<input name="forfallodatum" type="date" required /></label></div>
+      <div className="form-row"><label>Ansvarig<input name="ansvarig" placeholder="Vem tar den?" required /></label><label>Klart senast<input name="forfallodatum" type="date" required /></label></div>
       <button className="primary-button full" type="submit">Lägg till sysslan</button>
     </form>
   );
