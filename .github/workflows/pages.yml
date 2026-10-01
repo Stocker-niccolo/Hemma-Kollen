@@ -27,6 +27,7 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE: /Hemma-Kollen/
+          VITE_CHATT_URL: ${{ vars.VITE_CHATT_URL }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

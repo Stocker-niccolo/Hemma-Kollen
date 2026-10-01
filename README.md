@@ -45,6 +45,14 @@ anslutet används `VITE_SUPABASE_URL` och `VITE_SUPABASE_ANON_KEY`, och appen
 visar inloggning samt läser och skriver hushållets data. Om databasen ännu inte
 är migrerad faller gränssnittet tillbaka till ett tydligt märkt demoläge.
 
+## Chattrutan
+
+Nere till höger finns CasaVita-assistenten. Kunskapsbasen bor i
+`src/data/kunskap.ts` och är enda källan till vad boten vet. Svaren kommer från
+Claude via en liten Cloudflare Worker i [`worker/chatt/`](./worker/chatt/README.md)
+som håller API-nyckeln. Utan `VITE_CHATT_URL` kör rutan en lokal FAQ-motor och
+märks "Demo".
+
 ## Databasen
 
 Den första migreringen finns i

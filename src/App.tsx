@@ -34,6 +34,7 @@ import {
   skapaSyssla,
 } from "./lib/database";
 import { harSupabase, loggaInMedEpost, loggaUt, supabase } from "./lib/supabase";
+import ChattRuta from "./components/ChattRuta";
 import "./App.css";
 
 type Vy = "oversikt" | "rakningar" | "sysslor" | "inkop" | "avtal";
@@ -531,6 +532,7 @@ export default function App() {
       )}
 
       {notis && <div className="toast" role="status">✓ {notis}</div>}
+      <ChattRuta />
     </div>
   );
 }
@@ -649,6 +651,7 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
         <span>© {new Date().getFullYear()} CasaVita</span>
         <span>Under utveckling — sluten beta öppnar snart.</span>
       </footer>
+      <ChattRuta />
     </div>
   );
 }

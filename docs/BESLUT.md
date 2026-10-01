@@ -1,6 +1,6 @@
 # CasaVita — beslutsliggare och nästa steg
 
-Uppdaterad: 31 augusti 2026. Kompletterar [`HANDOFF.md`](./HANDOFF.md) (styrande)
+Uppdaterad: 1 oktober 2026. Kompletterar [`HANDOFF.md`](./HANDOFF.md) (styrande)
 med status per öppet beslut ur handoffens avsnitt 19, samt de konkreta stegen
 framåt. Statusar: **BESLUTAT** · **REKOMMENDATION** (väntar ägar-ja) · **ÖPPET**.
 
@@ -47,6 +47,13 @@ framåt. Statusar: **BESLUTAT** · **REKOMMENDATION** (väntar ägar-ja) · **Ö
 
 Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
 
+## 6. Nya idéer från ägaren (1 oktober 2026)
+
+| Idé | Status | Läge |
+|---|---|---|
+| AI-bot i chattruta på hemsidan som svarar på frågor om CasaVita och hushållsämnena | BESLUTAT — BYGGD 1/10 | Chattrutan ligger nere till höger på landningssidan och i appen. Kunskapsbas i `src/data/kunskap.ts` (enda källan), motor i `src/engine/chatt.ts` (13 tester), widget i `src/components/ChattRuta.tsx`. Svar från Claude (`claude-opus-5-5`, effort low, prompt-cache, server-side fallback) via Cloudflare Worker i `worker/chatt/` — nyckeln bor där, aldrig i klienten. Utan backend kör rutan en lokal FAQ-motor märkt "Demo". Hårda regler i systemprompten: estimat-inte-utfall, aldrig förmedla försäkring/lån, ersättning märks ut, lova inga olanserade funktioner, be aldrig om personnummer/kort. **Ägarsteg för skarpt läge:** se `worker/chatt/README.md` (Anthropic-nyckel, `wrangler deploy`, repo-variabel `VITE_CHATT_URL`, rate-limit-regel). |
+| Grannhjälpen — välj syssla (rengöra sopkärl, skotta tomten, klippa häck …) och få hjälp av grannar via hemsidan | ÖPPET — STRATEGIBESLUT | Byggs inte förrän beslutat. Detta är en **tvåsidig marknadsplats** (hushåll ↔ hjälpare), inte en organizer-funktion, och ligger utanför handoffens MVP (fas 4 "ytterligare tjänster"). Frågor som måste besvaras först: (a) vem är hjälparen — grannar privat, egenanställda via plattform (Frilans Finans-modell) eller lokala företag med RUT-avdrag? (b) betalning — Swish privat utan CasaVita i mitten, eller CasaVita som betalförmedlare (kräver tillstånd/partner)? (c) försäkring och ansvar vid skada; (d) skatt (privatperson som får betalt = inkomst); (e) intäkt för CasaVita — leadavgift från företag passar affärsmodellen bäst och undviker (b)–(d). **Rekommendation:** första version = "beställ hjälp"-formulär per syssla som skickar en förfrågan till lokala RUT-företag/partners (lead-modell, samma transparensregel som övriga partners), inte ett eget grannnätverk. Boten vet att funktionen är planerad och lovar inget. |
+
 ---
 
 ## Ägarsteg (blockerare — inget av detta kan göras av assistenten)
@@ -66,6 +73,8 @@ Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
    gränsdragning mot försäkringsdistribution/kreditförmedling.
 
 ## Nästa byggsteg (i ordning, efter ägar-ja per rad ovan)
+
+0. ✅ Chattbot (1/10). Återstår ägarsteg: deploya workern + sätta `VITE_CHATT_URL`.
 
 1. IA-justering: ekonomikärnan främst (nav + hemskärm), sysslor/inköp kvar men
    sekundärt.
