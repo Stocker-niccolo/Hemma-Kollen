@@ -11,7 +11,7 @@ import {
 
 describe("hittaFaqSvar (lokal reservmotor)", () => {
   it("hittar rätt svar på de föreslagna frågorna", () => {
-    expect(hittaFaqSvar("Vad är CasaVita?")?.id).toBe("vad-ar");
+    expect(hittaFaqSvar("Vad är Hemmakollen?")?.id).toBe("vad-ar");
     expect(hittaFaqSvar("Kostar det något?")?.id).toBe("pris");
     expect(hittaFaqSvar("Hur tjänar ni pengar?")?.id).toBe("affar");
     expect(hittaFaqSvar("När ska jag byta elavtal?")?.id).toBe("el");

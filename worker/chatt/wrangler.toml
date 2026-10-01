@@ -1,13 +1,13 @@
-# CasaVita chatt-worker. Deploya med `npm run deploy` i den här mappen.
+# Hemmakollen chatt-worker. Deploya med `npm run deploy` i den här mappen.
 # Hemligheter (sätts en gång, lagras hos Cloudflare, aldrig i repot):
 #   npx wrangler secret put ANTHROPIC_API_KEY
-name = "casavita-chatt"
+name = "hemmakollen-chatt"
 main = "src/index.ts"
 compatibility_date = "2025-09-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-# Kommaseparerade origins som får anropa workern. Lägg till casavita.se när domänen finns.
+# Kommaseparerade origins som får anropa workern. Lägg till hemmakollen.se när domänen finns.
 ALLOWED_ORIGINS = "https://stocker-niccolo.github.io,http://localhost:5173"
 
 [observability]

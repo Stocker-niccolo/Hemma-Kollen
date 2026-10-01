@@ -236,7 +236,7 @@ button.stat-card { cursor: pointer; }.stat-card:hover { border-color: #c7c9bd; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 
-/* --- CasaVita-assistenten (inbyggd chattyta på Översikten) --- */
+/* --- Hemmakollen-assistenten (inbyggd chattyta på Översikten) --- */
 .chatt-panel { margin-top: 16px; padding: 22px 24px 14px; }
 .chatt-topp { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .chatt-titel { display: flex; align-items: center; gap: 11px; }

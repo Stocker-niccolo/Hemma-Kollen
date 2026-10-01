@@ -1,6 +1,6 @@
-# CasaVita (fd Hemma Kollen)
+# Hemmakollen (fd Hemma Kollen)
 
-Din digitala hemmapartner. CasaVita samlar hushållets återkommande kostnader,
+Din digitala hemmapartner. Hemmakollen samlar hushållets återkommande kostnader,
 avtal, räkningar, sysslor och viktiga datum i en lugn, mobilanpassad webbapp —
 och säger till när det är läge att agera.
 
@@ -47,7 +47,7 @@ visar inloggning samt läser och skriver hushållets data. Om databasen ännu in
 
 ## Chattrutan
 
-Nere till höger finns CasaVita-assistenten. Kunskapsbasen bor i
+Nere till höger finns Hemmakollen-assistenten. Kunskapsbasen bor i
 `src/data/kunskap.ts` och är enda källan till vad boten vet. Svaren kommer från
 Claude via en liten Cloudflare Worker i [`worker/chatt/`](./worker/chatt/README.md)
 som håller API-nyckeln. Utan `VITE_CHATT_URL` kör rutan en lokal FAQ-motor och
@@ -91,7 +91,7 @@ Samma kontroller körs i GitHub Actions för varje pull request och push till
 
 ## Viktiga produktprinciper
 
-- CasaVita ska kännas hjälpsam även utan ett partnererbjudande.
+- Hemmakollen ska kännas hjälpsam även utan ett partnererbjudande.
 - Besparingar är alltid tydligt märkta som uppskattningar.
 - Tjänsten jämför och länkar men ger inte egen försäkringsrådgivning.
 - Minsta möjliga persondata lagras, och hushåll isoleras med RLS.

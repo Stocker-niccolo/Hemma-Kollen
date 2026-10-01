@@ -1,11 +1,11 @@
-// Kunskapsbas för CasaVita-boten. ENDA källan till vad boten vet — används både
+// Kunskapsbas för Hemmakollen-boten. ENDA källan till vad boten vet — används både
 // av Claude-workern (som systemprompt) och av den lokala reservmotorn när
-// ingen backend är konfigurerad. Håll texten kort, konkret och i CasaVitas ton
+// ingen backend är konfigurerad. Håll texten kort, konkret och i Hemmakollens ton
 // (se docs/HANDOFF.md §11): enkelt, varmt, tryggt, handlingsinriktat.
 //
 // Regler som ALDRIG får brytas (handoffens §9, §12 + FI-linjen):
 // - Besparingar är uppskattningar, aldrig utfall.
-// - CasaVita förmedlar aldrig försäkring, lån eller kredit — jämför och länkar.
+// - Hemmakollen förmedlar aldrig försäkring, lån eller kredit — jämför och länkar.
 // - Ersättning från partner märks alltid ut. Priset för användaren påverkas inte.
 // - Ingen juridisk eller finansiell rådgivning som ersätter en expert.
 
@@ -18,28 +18,28 @@ export interface FaqPost {
   svar: string;
 }
 
-export const CASAVITA_FAKTA = `
-CasaVita är en digital hemmapartner för svenska hushåll. Appen samlar hushållets
+export const HEMMAKOLLEN_FAKTA = `
+Hemmakollen är en digital hemmapartner för svenska hushåll. Appen samlar hushållets
 återkommande kostnader (el, försäkringar, mobil, bredband, streaming, gym),
 avtal, bindningstider och viktiga datum på ett ställe — och säger till när det
 är läge att agera: innan bindningstiden löper ut, innan en provperiod börjar
 kosta, innan en räkning förfaller.
 
-Produktlöfte: CasaVita samlar ditt hem, håller koll åt dig och hjälper dig fatta
+Produktlöfte: Hemmakollen samlar ditt hem, håller koll åt dig och hjälper dig fatta
 bättre beslut — kostnadsfritt.
 
 Så fungerar det:
 1. Lägg in hushållets avtal och räkningar (manuellt i dag; kvitto-/fakturatolkning kommer senare).
-2. CasaVita bevakar bindningstider, uppsägningsfönster och förfallodatum.
-3. När något ser dyrt ut förklarar CasaVita varför, vad du kan göra och ungefär vad du kan spara.
-4. Du bestämmer alltid själv. CasaVita byter aldrig avtal åt dig.
+2. Hemmakollen bevakar bindningstider, uppsägningsfönster och förfallodatum.
+3. När något ser dyrt ut förklarar Hemmakollen varför, vad du kan göra och ungefär vad du kan spara.
+4. Du bestämmer alltid själv. Hemmakollen byter aldrig avtal åt dig.
 
 Funktioner i dag: översikt över månadskostnad, räkningar med förfallodatum,
 avtal per kategori, inköpslista och sysslor som kan delas i hushållet, samt
 förslag på besparingar (el, hemförsäkring, mobil/bredband först).
 
 Affärsmodell och transparens: Appen är gratis för användaren. Inga
-kortuppgifter, ingen bankinloggning. Om du tecknar ett avtal via CasaVita kan
+kortuppgifter, ingen bankinloggning. Om du tecknar ett avtal via Hemmakollen kan
 vi få ersättning från leverantören. Det påverkar inte ditt pris — och vi säger
 alltid till. Ett erbjudande visas aldrig bara för att ersättningen är hög. Om
 hela marknaden inte jämförs ska det framgå.
@@ -50,7 +50,7 @@ privata kostnader. Data säljs aldrig vidare som rå kunddata. Bankkoppling bygg
 i så fall via behörig Open Banking-partner, aldrig via egen hantering av
 bankinloggning.
 
-Status: CasaVita är under uppbyggnad. Hemsidan visar en demo med fiktiva data.
+Status: Hemmakollen är under uppbyggnad. Hemsidan visar en demo med fiktiva data.
 Hushållsdelning, påminnelser med notiser och riktiga partnerjämförelser byggs
 stegvis. På sikt planeras även Grannhjälpen — hjälp från grannar med praktiska
 saker som att rengöra sopkärl, skotta eller klippa häcken — men den finns inte
@@ -64,7 +64,7 @@ export const AMNEN: Array<{ rubrik: string; text: string }> = [
   },
   {
     rubrik: "Hemförsäkring",
-    text: `Hemförsäkring täcker lösöre, ansvar, rättsskydd, överfall och reseskydd. Villa-/bostadsrättstillägg täcker själva bostaden. Jämför självrisk, maxbelopp för lösöre, drulle (allrisk) och om reseskyddet räcker. Byte sker vanligen vid huvudförfallodag, men många bolag tillåter byte när som helst med 1 månads uppsägning. CasaVita jämför och länkar vidare — vi förmedlar aldrig försäkring och ger inte individuell försäkringsrådgivning. Oberoende vägledning: Konsumenternas Försäkringsbyrå.`,
+    text: `Hemförsäkring täcker lösöre, ansvar, rättsskydd, överfall och reseskydd. Villa-/bostadsrättstillägg täcker själva bostaden. Jämför självrisk, maxbelopp för lösöre, drulle (allrisk) och om reseskyddet räcker. Byte sker vanligen vid huvudförfallodag, men många bolag tillåter byte när som helst med 1 månads uppsägning. Hemmakollen jämför och länkar vidare — vi förmedlar aldrig försäkring och ger inte individuell försäkringsrådgivning. Oberoende vägledning: Konsumenternas Försäkringsbyrå.`,
   },
   {
     rubrik: "Mobil och bredband",
@@ -76,7 +76,7 @@ export const AMNEN: Array<{ rubrik: string; text: string }> = [
   },
   {
     rubrik: "Räkningar och förfallodatum",
-    text: `Betala i tid för att slippa påminnelseavgift (max 60 kr) och inkasso. Autogiro eller e-faktura minskar risken att missa något. CasaVita påminner inför förfallodatum och visar vad som är obetalt. Vid betalningssvårigheter: kontakta leverantören tidigt och be om anstånd eller delbetalning; kommunens budget- och skuldrådgivning är gratis.`,
+    text: `Betala i tid för att slippa påminnelseavgift (max 60 kr) och inkasso. Autogiro eller e-faktura minskar risken att missa något. Hemmakollen påminner inför förfallodatum och visar vad som är obetalt. Vid betalningssvårigheter: kontakta leverantören tidigt och be om anstånd eller delbetalning; kommunens budget- och skuldrådgivning är gratis.`,
   },
   {
     rubrik: "Avtal, bindningstid och uppsägning",
@@ -84,11 +84,11 @@ export const AMNEN: Array<{ rubrik: string; text: string }> = [
   },
   {
     rubrik: "Hushåll och delning",
-    text: `Ett hushåll i CasaVita har en ägare och medlemmar. Räkningar, avtal, inköpslistor och sysslor kan delas. Privata kostnader syns inte automatiskt för andra. Swish-betalningar mellan medlemmar görs via vanliga Swish-länkar, CasaVita hanterar aldrig pengar.`,
+    text: `Ett hushåll i Hemmakollen har en ägare och medlemmar. Räkningar, avtal, inköpslistor och sysslor kan delas. Privata kostnader syns inte automatiskt för andra. Swish-betalningar mellan medlemmar görs via vanliga Swish-länkar, Hemmakollen hanterar aldrig pengar.`,
   },
   {
     rubrik: "Besparingar och förslag",
-    text: `CasaVitas förslag bygger på regler, t.ex. avtal som löper ut inom 30 dagar, kostnad över ett riktvärde, prisökning, dubbletter eller provperiod som blir betald. Alla belopp är uppskattningar baserade på marknadssnitt och visas alltid som "cirka". Vi säger varför något föreslås och vilka data som använts. Du kan rätta fel, och inget byts utan ditt uttryckliga godkännande.`,
+    text: `Hemmakollens förslag bygger på regler, t.ex. avtal som löper ut inom 30 dagar, kostnad över ett riktvärde, prisökning, dubbletter eller provperiod som blir betald. Alla belopp är uppskattningar baserade på marknadssnitt och visas alltid som "cirka". Vi säger varför något föreslås och vilka data som använts. Du kan rätta fel, och inget byts utan ditt uttryckliga godkännande.`,
   },
   {
     rubrik: "Grannhjälpen (planerad)",
@@ -98,7 +98,7 @@ export const AMNEN: Array<{ rubrik: string; text: string }> = [
 
 /** Förslag som visas som chips innan användaren skrivit något. */
 export const FORSLAG_FRAGOR = [
-  "Vad är CasaVita?",
+  "Vad är Hemmakollen?",
   "Kostar det något?",
   "Hur tjänar ni pengar?",
   "När ska jag byta elavtal?",
@@ -109,18 +109,18 @@ export const FORSLAG_FRAGOR = [
 export const FAQ: FaqPost[] = [
   {
     id: "vad-ar",
-    nyckelord: ["vad är casavita", "vad gör casavita", "vad är det här", "vad är appen", "berätta om casavita"],
-    svar: "CasaVita är en digital hemmapartner som samlar hushållets kostnader, avtal och viktiga datum på ett ställe — och säger till i rätt tid när det är läge att agera. Gratis för dig som användare.",
+    nyckelord: ["vad är hemmakollen", "vad gör hemmakollen", "vad är det här", "vad är appen", "berätta om hemmakollen"],
+    svar: "Hemmakollen är en digital hemmapartner som samlar hushållets kostnader, avtal och viktiga datum på ett ställe — och säger till i rätt tid när det är läge att agera. Gratis för dig som användare.",
   },
   {
     id: "pris",
-    nyckelord: ["kostar", "pris", "gratis", "avgift", "betala för appen", "prenumeration på casavita"],
-    svar: "CasaVita är gratis för dig som användare. Inga kortuppgifter, ingen bankinloggning. Vi kan få ersättning från en leverantör om du tecknar ett avtal via oss — det påverkar inte ditt pris, och vi säger alltid till.",
+    nyckelord: ["kostar", "pris", "gratis", "avgift", "betala för appen", "prenumeration på hemmakollen"],
+    svar: "Hemmakollen är gratis för dig som användare. Inga kortuppgifter, ingen bankinloggning. Vi kan få ersättning från en leverantör om du tecknar ett avtal via oss — det påverkar inte ditt pris, och vi säger alltid till.",
   },
   {
     id: "affar",
     nyckelord: ["tjänar ni pengar", "tjänar pengar", "affärsmodell", "ersättning", "provision", "affiliate", "hur finansieras"],
-    svar: "Appen är gratis. CasaVita kan få ersättning från leverantören när du väljer ett avtal via oss. Det påverkar inte ditt pris, och vi visar aldrig ett erbjudande bara för att ersättningen är hög.",
+    svar: "Appen är gratis. Hemmakollen kan få ersättning från leverantören när du väljer ett avtal via oss. Det påverkar inte ditt pris, och vi visar aldrig ett erbjudande bara för att ersättningen är hög.",
   },
   {
     id: "el",
@@ -130,7 +130,7 @@ export const FAQ: FaqPost[] = [
   {
     id: "forsakring",
     nyckelord: ["hemförsäkring", "försäkring", "självrisk", "drulle", "allrisk", "villaförsäkring", "bostadsrättstillägg"],
-    svar: "Jämför självrisk, maxbelopp för lösöre, allrisk (drulle) och reseskydd. Många bolag låter dig byta när som helst med en månads uppsägning. CasaVita jämför och länkar vidare men förmedlar aldrig försäkring — för personlig rådgivning, vänd dig till Konsumenternas Försäkringsbyrå.",
+    svar: "Jämför självrisk, maxbelopp för lösöre, allrisk (drulle) och reseskydd. Många bolag låter dig byta när som helst med en månads uppsägning. Hemmakollen jämför och länkar vidare men förmedlar aldrig försäkring — för personlig rådgivning, vänd dig till Konsumenternas Försäkringsbyrå.",
   },
   {
     id: "mobil",
@@ -140,12 +140,12 @@ export const FAQ: FaqPost[] = [
   {
     id: "streaming",
     nyckelord: ["streaming", "netflix", "spotify", "viaplay", "prenumerationer", "provperiod", "disney", "hbo", "max"],
-    svar: "Räkna ihop alla prenumerationer en gång per kvartal och pausa det ni inte använt på en månad. Provperioder övergår ofta tyst i betalning — CasaVita kan påminna innan det händer.",
+    svar: "Räkna ihop alla prenumerationer en gång per kvartal och pausa det ni inte använt på en månad. Provperioder övergår ofta tyst i betalning — Hemmakollen kan påminna innan det händer.",
   },
   {
     id: "rakning",
     nyckelord: ["räkning", "faktura", "förfallodatum", "betala", "påminnelseavgift", "inkasso", "autogiro", "e-faktura", "obetald"],
-    svar: "Betala i tid så slipper du påminnelseavgift och inkasso. Autogiro eller e-faktura minskar risken att missa något. CasaVita visar vad som är obetalt och påminner inför förfallodatum. Vid betalningssvårigheter: kontakta leverantören tidigt.",
+    svar: "Betala i tid så slipper du påminnelseavgift och inkasso. Autogiro eller e-faktura minskar risken att missa något. Hemmakollen visar vad som är obetalt och påminner inför förfallodatum. Vid betalningssvårigheter: kontakta leverantören tidigt.",
   },
   {
     id: "uppsagning",
@@ -155,17 +155,17 @@ export const FAQ: FaqPost[] = [
   {
     id: "hushall",
     nyckelord: ["hushåll", "familj", "dela", "medlem", "bjud in", "partner", "sambo", "swish"],
-    svar: "Ett hushåll har en ägare och medlemmar som kan dela räkningar, avtal, inköpslistor och sysslor. Privata kostnader syns inte automatiskt för andra. Swish mellan medlemmar sker via vanliga Swish-länkar — CasaVita hanterar aldrig pengar.",
+    svar: "Ett hushåll har en ägare och medlemmar som kan dela räkningar, avtal, inköpslistor och sysslor. Privata kostnader syns inte automatiskt för andra. Swish mellan medlemmar sker via vanliga Swish-länkar — Hemmakollen hanterar aldrig pengar.",
   },
   {
     id: "besparing",
     nyckelord: ["spara", "besparing", "förslag", "rekommendation", "hur mycket kan jag spara", "dyrt"],
-    svar: "CasaVitas förslag bygger på tydliga regler, t.ex. avtal som snart löper ut eller en kostnad som ligger över marknadssnittet. Alla belopp är uppskattningar och visas som 'cirka'. Vi förklarar alltid varför, och inget byts utan ditt godkännande.",
+    svar: "Hemmakollens förslag bygger på tydliga regler, t.ex. avtal som snart löper ut eller en kostnad som ligger över marknadssnittet. Alla belopp är uppskattningar och visas som 'cirka'. Vi förklarar alltid varför, och inget byts utan ditt godkännande.",
   },
   {
     id: "integritet",
     nyckelord: ["integritet", "gdpr", "personuppgifter", "data", "säkerhet", "bank", "bankid", "radera", "lagras"],
-    svar: "CasaVita är GDPR-anpassad och bygger på dataminimering. Du kan exportera och radera dina data, och vi säljer aldrig data vidare. Ingen bankinloggning krävs — bankkoppling skulle i så fall gå via en behörig Open Banking-partner.",
+    svar: "Hemmakollen är GDPR-anpassad och bygger på dataminimering. Du kan exportera och radera dina data, och vi säljer aldrig data vidare. Ingen bankinloggning krävs — bankkoppling skulle i så fall gå via en behörig Open Banking-partner.",
   },
   {
     id: "grannhjalp",

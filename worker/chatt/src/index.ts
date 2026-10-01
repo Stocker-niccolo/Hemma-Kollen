@@ -1,4 +1,4 @@
-// CasaVita chatt-worker (Cloudflare Workers). Tar emot historiken från
+// Hemmakollen chatt-worker (Cloudflare Workers). Tar emot historiken från
 // ChattRuta, lägger på systemprompten ur kunskapsbasen och streamar Claudes
 // svar tillbaka som ren text. API-nyckeln bor här, aldrig i klienten.
 //
@@ -81,7 +81,7 @@ export default {
         }
         const slut = await stream.finalMessage();
         if (slut.stop_reason === "refusal" && !skrivet) {
-          await writer.write(enc.encode("Det där kan jag tyvärr inte hjälpa till med. Fråga gärna om CasaVita eller hushållets avtal och kostnader."));
+          await writer.write(enc.encode("Det där kan jag tyvärr inte hjälpa till med. Fråga gärna om Hemmakollen eller hushållets avtal och kostnader."));
         }
       } catch (error) {
         console.error("[chatt] Claude-fel", error instanceof Error ? error.message : error);

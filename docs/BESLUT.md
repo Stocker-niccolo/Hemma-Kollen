@@ -1,4 +1,4 @@
-# CasaVita — beslutsliggare och nästa steg
+# Hemmakollen — beslutsliggare och nästa steg
 
 Uppdaterad: 1 oktober 2026. Kompletterar [`HANDOFF.md`](./HANDOFF.md) (styrande)
 med status per öppet beslut ur handoffens avsnitt 19, samt de konkreta stegen
@@ -38,10 +38,10 @@ framåt. Statusar: **BESLUTAT** · **REKOMMENDATION** (väntar ägar-ja) · **Ö
 
 | Beslut | Status | Läge |
 |---|---|---|
-| CasaVita slutligt namn? | BESLUTAT | Bekräftat av ägaren 27 juli 2026. Klient, metadata och dokumentation bär namnet sedan 31 augusti. |
+| Hemmakollen slutligt namn? | BESLUTAT | Ägaren bytte 1 oktober 2026 från CasaVita till **Hemmakollen** (ett ord). Klient, metadata, dokumentation, bot och worker bär namnet sedan dess. |
 | Domän, sociala namn, varumärkesskydd? | ÖPPET — ÄGARSTEG | Inte kontrollerat. Blockerar riktig lansering, inte utveckling. |
 | Slutlig logotyp, palett, typografi? | REKOMMENDATION | Arbetsversionen live (terrakotta/dämpad grön/benvit, Fraunces + DM Sans) följer handoffens riktning och behålls tills ägaren vill göra ett riktigt varumärkesarbete. |
-| Namn med förklarande tillägg? | REKOMMENDATION | "CasaVita — din digitala hemmapartner." |
+| Namn med förklarande tillägg? | REKOMMENDATION | "Hemmakollen — din digitala hemmapartner." |
 
 ## 5. Organisation
 
@@ -51,8 +51,8 @@ Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
 
 | Idé | Status | Läge |
 |---|---|---|
-| AI-bot i chattruta på hemsidan som svarar på frågor om CasaVita och hushållsämnena | BESLUTAT — BYGGD 1/10 | Chattrutan ligger nere till höger på landningssidan och i appen. Kunskapsbas i `src/data/kunskap.ts` (enda källan), motor i `src/engine/chatt.ts` (13 tester), widget i `src/components/ChattRuta.tsx`. Svar från Claude (`claude-opus-5-5`, effort low, prompt-cache, server-side fallback) via Cloudflare Worker i `worker/chatt/` — nyckeln bor där, aldrig i klienten. Utan backend kör rutan en lokal FAQ-motor märkt "Demo". Hårda regler i systemprompten: estimat-inte-utfall, aldrig förmedla försäkring/lån, ersättning märks ut, lova inga olanserade funktioner, be aldrig om personnummer/kort. **Ägarsteg för skarpt läge:** se `worker/chatt/README.md` (Anthropic-nyckel, `wrangler deploy`, repo-variabel `VITE_CHATT_URL`, rate-limit-regel). |
-| Grannhjälpen — välj syssla (rengöra sopkärl, skotta tomten, klippa häck …) och få hjälp av grannar via hemsidan | ÖPPET — STRATEGIBESLUT | Byggs inte förrän beslutat. Detta är en **tvåsidig marknadsplats** (hushåll ↔ hjälpare), inte en organizer-funktion, och ligger utanför handoffens MVP (fas 4 "ytterligare tjänster"). Frågor som måste besvaras först: (a) vem är hjälparen — grannar privat, egenanställda via plattform (Frilans Finans-modell) eller lokala företag med RUT-avdrag? (b) betalning — Swish privat utan CasaVita i mitten, eller CasaVita som betalförmedlare (kräver tillstånd/partner)? (c) försäkring och ansvar vid skada; (d) skatt (privatperson som får betalt = inkomst); (e) intäkt för CasaVita — leadavgift från företag passar affärsmodellen bäst och undviker (b)–(d). **Rekommendation:** första version = "beställ hjälp"-formulär per syssla som skickar en förfrågan till lokala RUT-företag/partners (lead-modell, samma transparensregel som övriga partners), inte ett eget grannnätverk. Boten vet att funktionen är planerad och lovar inget. |
+| AI-bot i chattruta på hemsidan som svarar på frågor om Hemmakollen och hushållsämnena | BESLUTAT — BYGGD 1/10 | Chattrutan ligger nere till höger på landningssidan och i appen. Kunskapsbas i `src/data/kunskap.ts` (enda källan), motor i `src/engine/chatt.ts` (13 tester), widget i `src/components/ChattRuta.tsx`. Svar från Claude (`claude-opus-5-5`, effort low, prompt-cache, server-side fallback) via Cloudflare Worker i `worker/chatt/` — nyckeln bor där, aldrig i klienten. Utan backend kör rutan en lokal FAQ-motor märkt "Demo". Hårda regler i systemprompten: estimat-inte-utfall, aldrig förmedla försäkring/lån, ersättning märks ut, lova inga olanserade funktioner, be aldrig om personnummer/kort. **Ägarsteg för skarpt läge:** se `worker/chatt/README.md` (Anthropic-nyckel, `wrangler deploy`, repo-variabel `VITE_CHATT_URL`, rate-limit-regel). |
+| Grannhjälpen — välj syssla (rengöra sopkärl, skotta tomten, klippa häck …) och få hjälp av grannar via hemsidan | ÖPPET — STRATEGIBESLUT | Byggs inte förrän beslutat. Detta är en **tvåsidig marknadsplats** (hushåll ↔ hjälpare), inte en organizer-funktion, och ligger utanför handoffens MVP (fas 4 "ytterligare tjänster"). Frågor som måste besvaras först: (a) vem är hjälparen — grannar privat, egenanställda via plattform (Frilans Finans-modell) eller lokala företag med RUT-avdrag? (b) betalning — Swish privat utan Hemmakollen i mitten, eller Hemmakollen som betalförmedlare (kräver tillstånd/partner)? (c) försäkring och ansvar vid skada; (d) skatt (privatperson som får betalt = inkomst); (e) intäkt för Hemmakollen — leadavgift från företag passar affärsmodellen bäst och undviker (b)–(d). **Rekommendation:** första version = "beställ hjälp"-formulär per syssla som skickar en förfrågan till lokala RUT-företag/partners (lead-modell, samma transparensregel som övriga partners), inte ett eget grannnätverk. Boten vet att funktionen är planerad och lovar inget. |
 
 ---
 
@@ -62,8 +62,8 @@ Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
    migrationer ligger redo), lägg `VITE_SUPABASE_URL` och
    `VITE_SUPABASE_ANON_KEY` som repo-secrets. Workflow-ändringen som läser in
    dem görs på beställning när nycklarna finns. Utan detta är sajten ren demo.
-2. **Domän**: kontrollera/registrera casavita.se (+ ev. .com) och besluta om
-   repo-namnbyte `Hemma-Kollen` → `CasaVita` (ändrar Pages-URL:en).
+2. **Domän**: kontrollera/registrera hemmakollen.se (+ ev. .com) och besluta om
+   repo-namnbyte `Hemma-Kollen` → `Hemmakollen` (ändrar Pages-URL:en).
 3. **Varumärkeskoll**: namn-/varumärkesrisk, sociala användarnamn.
 4. **Affiliatenätverk**: öppna konto (t.ex. det nätverk som täcker el/försäkring/
    mobil bäst) så platshållarlänkarna kan bytas mot riktiga tracking-länkar.

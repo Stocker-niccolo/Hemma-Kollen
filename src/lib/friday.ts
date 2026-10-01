@@ -1,8 +1,8 @@
-// FRIDAY-bryggan (alt. 3: CasaVita är fristående och POST:ar events till
+// FRIDAY-bryggan (alt. 3: Hemmakollen är fristående och POST:ar events till
 // FRIDAY-navet). Enkelriktat ut. Ingen delad kod med FRIDAY-repot.
 //
 // FRIDAY plockar upp dessa i morgonbriefen, t.ex.:
-//   "CasaVita: 3 obetalda räkningar förfaller denna vecka + 1 besparing (~4 000 kr/år)"
+//   "Hemmakollen: 3 obetalda räkningar förfaller denna vecka + 1 besparing (~4 000 kr/år)"
 
 import type { Besparingsforslag, Rakning } from "../domain/types";
 import { totalArsbesparing } from "../engine/besparingar";

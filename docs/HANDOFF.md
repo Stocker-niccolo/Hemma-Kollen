@@ -1,7 +1,7 @@
-# CasaVita – komplett projekthandoff
+# Hemmakollen – komplett projekthandoff
 
 **Dokumenttyp:** Strategisk, kommersiell och teknisk projekthandoff  
-**Projekt:** CasaVita  
+**Projekt:** Hemmakollen  
 **Marknad:** Sverige  
 **Primär produkt:** Kostnadsfri konsumentapp för att samla, förstå och förbättra hushållets ekonomi och vardag  
 **Affärsmodell:** Provision, affiliateintäkter och partnerersättning – inte abonnemangsavgift från konsumenten  
@@ -12,11 +12,11 @@
 
 ## 1. Instruktion till den som tar över projektet
 
-Det här dokumentet ska vara den huvudsakliga utgångspunkten för fortsatt arbete med CasaVita. Läs hela dokumentet innan du föreslår funktioner, design, teknisk arkitektur, affärsmodell eller prioriteringar.
+Det här dokumentet ska vara den huvudsakliga utgångspunkten för fortsatt arbete med Hemmakollen. Läs hela dokumentet innan du föreslår funktioner, design, teknisk arkitektur, affärsmodell eller prioriteringar.
 
 Arbetssätt:
 
-1. Bevara grundidén: CasaVita ska kännas som en varm och trygg hemmapartner, inte som ett kallt finansverktyg.
+1. Bevara grundidén: Hemmakollen ska kännas som en varm och trygg hemmapartner, inte som ett kallt finansverktyg.
 2. Gör inte produkten större än nödvändigt i första versionen.
 3. Skilj alltid mellan beslutade krav, rekommendationer och öppna frågor.
 4. Prioritera verklig användarnytta före mängden funktioner.
@@ -26,7 +26,7 @@ Arbetssätt:
    - minska administration;
    - förebygga missade betalningar eller dåliga avtal;
    - förenkla samarbete i hushållet;
-   - skapa en relevant och användarvänlig intäktsmöjlighet för CasaVita.
+   - skapa en relevant och användarvänlig intäktsmöjlighet för Hemmakollen.
 6. Undvik att presentera annonser och partnererbjudanden som neutral rådgivning. Transparens och förtroende är centrala.
 7. Vid osäkerhet: dokumentera antagandet och ställ en konkret fråga innan en irreversibel lösning byggs.
 
@@ -34,11 +34,11 @@ Arbetssätt:
 
 ## 2. Sammanfattning av projektet
 
-CasaVita är en svensk konsumentapp som ska ge människor en samlad bild av hushållets ekonomi, avtal, räkningar, inköp och gemensamma uppgifter. Appen ska vara kostnadsfri för användaren.
+Hemmakollen är en svensk konsumentapp som ska ge människor en samlad bild av hushållets ekonomi, avtal, räkningar, inköp och gemensamma uppgifter. Appen ska vara kostnadsfri för användaren.
 
 Problemet är att hushållets vardag är utspridd mellan banken, mejlen, kalendern, operatörernas appar, försäkringsbolag, elleverantörer, anteckningar och chattar. Många betalar för mycket, missar uppsägningstider, glömmer återkommande kostnader eller saknar en gemensam överblick över vem som ansvarar för vad.
 
-CasaVita samlar denna vardag på ett ställe och hjälper användaren att agera vid rätt tidpunkt. Det långsiktiga värdet ligger inte bara i att visa information, utan i att upptäcka relevanta situationer och föreslå nästa bästa handling.
+Hemmakollen samlar denna vardag på ett ställe och hjälper användaren att agera vid rätt tidpunkt. Det långsiktiga värdet ligger inte bara i att visa information, utan i att upptäcka relevanta situationer och föreslå nästa bästa handling.
 
 Exempel:
 
@@ -49,7 +49,7 @@ Exempel:
 - Två personer i hushållet betalar för överlappande tjänster.
 - En faktura närmar sig förfallodatum.
 
-CasaVita ska då förklara situationen på vanlig svenska och erbjuda en relevant åtgärd. Om användaren väljer ett partnererbjudande kan CasaVita få provision.
+Hemmakollen ska då förklara situationen på vanlig svenska och erbjuda en relevant åtgärd. Om användaren väljer ett partnererbjudande kan Hemmakollen få provision.
 
 ---
 
@@ -61,11 +61,11 @@ Att bli Sveriges mest omtyckta och betrodda digitala hemmapartner – platsen d�
 
 ### Mission
 
-CasaVita ska göra det enkelt för vanliga människor att förstå vad hushållet kostar, vad som behöver göras och när ett bättre beslut finns att fatta.
+Hemmakollen ska göra det enkelt för vanliga människor att förstå vad hushållet kostar, vad som behöver göras och när ett bättre beslut finns att fatta.
 
 ### Produktlöfte
 
-**CasaVita samlar ditt hem, håller koll åt dig och hjälper dig fatta bättre beslut – kostnadsfritt.**
+**Hemmakollen samlar ditt hem, håller koll åt dig och hjälper dig fatta bättre beslut – kostnadsfritt.**
 
 ### Önskad känsla
 
@@ -80,7 +80,7 @@ Varumärket och produkten ska upplevas som:
 - smart utan att skryta om AI;
 - transparent och på användarens sida.
 
-### CasaVita ska inte kännas som
+### Hemmakollen ska inte kännas som
 
 - en bankapp;
 - en aggressiv jämförelsesajt;
@@ -105,7 +105,7 @@ Varumärket och produkten ska upplevas som:
 
 ### Kärninsikt
 
-Det största kommersiella och användarmässiga värdet uppstår när CasaVita kan hjälpa användaren precis när ett beslut är relevant. En generell lista med erbjudanden är svag. Ett begripligt förslag som bygger på användarens situation, timing och möjliga besparing är starkt.
+Det största kommersiella och användarmässiga värdet uppstår när Hemmakollen kan hjälpa användaren precis när ett beslut är relevant. En generell lista med erbjudanden är svag. Ett begripligt förslag som bygger på användarens situation, timing och möjliga besparing är starkt.
 
 ---
 
@@ -200,15 +200,15 @@ Varje post bör kunna innehålla:
 
 ### 6.3 Smarta insikter och rekommendationer
 
-CasaVita ska identifiera relevanta händelser och formulera dem enkelt.
+Hemmakollen ska identifiera relevanta händelser och formulera dem enkelt.
 
 En rekommendation ska helst innehålla:
 
-1. vad CasaVita har upptäckt;
+1. vad Hemmakollen har upptäckt;
 2. varför det är relevant nu;
 3. vad användaren kan göra;
 4. uppskattad effekt eller besparing;
-5. om CasaVita får ersättning från en partner.
+5. om Hemmakollen får ersättning från en partner.
 
 Exempel:
 
@@ -245,7 +245,7 @@ Denna pelare får inte göra MVP:n för bred. Ekonomisk överblick och avtal bö
 
 MVP:n ska bevisa tre saker:
 
-1. Användare vill samla sina återkommande hushållskostnader i CasaVita.
+1. Användare vill samla sina återkommande hushållskostnader i Hemmakollen.
 2. Översikten och påminnelserna skapar tillräckligt värde för återkommande användning.
 3. Relevanta rekommendationer kan leda till handling och intäkter utan att skada förtroendet.
 
@@ -330,7 +330,7 @@ MVP:n ska bevisa tre saker:
 1. Användaren möts av ett tydligt löfte: kontroll över hushållets kostnader, kostnadsfritt.
 2. Konto skapas med så få steg som möjligt.
 3. Användaren skapar sitt hushåll.
-4. CasaVita frågar vilka typer av återkommande kostnader som finns.
+4. Hemmakollen frågar vilka typer av återkommande kostnader som finns.
 5. Användaren lägger till några faktiska kostnader.
 6. Appen visar en första sammanställning och ett konkret värde.
 7. Användaren uppmanas att lägga till avtalsdatum och aktivera påminnelser.
@@ -341,7 +341,7 @@ MVP:n ska bevisa tre saker:
 1. Användaren öppnar appen via en påminnelse eller egen kontroll.
 2. Hemskärmen visar vad som har ändrats och vad som kräver uppmärksamhet.
 3. Användaren öppnar en relevant händelse.
-4. CasaVita förklarar situationen och erbjuder en åtgärd.
+4. Hemmakollen förklarar situationen och erbjuder en åtgärd.
 5. Användaren markerar händelsen som hanterad, skjuter upp den eller går vidare till jämförelse/partner.
 6. Appen uppdaterar status och sparar historik.
 
@@ -355,7 +355,7 @@ Varje session bör börja med svaret på: **Vad behöver jag veta eller göra ju
 
 ### Grundmodell
 
-Appen ska vara gratis för konsumenten. CasaVita tjänar i första hand pengar när användaren väljer en relevant produkt eller tjänst genom appen.
+Appen ska vara gratis för konsumenten. Hemmakollen tjänar i första hand pengar när användaren väljer en relevant produkt eller tjänst genom appen.
 
 ### Möjliga intäktskällor
 
@@ -381,13 +381,13 @@ Appen ska vara gratis för konsumenten. CasaVita tjänar i första hand pengar n
 
 ### Kommersiell princip
 
-CasaVita ska rekommendera rätt åtgärd vid rätt tillfälle, inte visa flest möjliga erbjudanden. Ett erbjudande ska inte visas enbart för att ersättningen är hög.
+Hemmakollen ska rekommendera rätt åtgärd vid rätt tillfälle, inte visa flest möjliga erbjudanden. Ett erbjudande ska inte visas enbart för att ersättningen är hög.
 
 ### Transparens
 
-När CasaVita kan få ersättning ska detta framgå tydligt. Exempel:
+När Hemmakollen kan få ersättning ska detta framgå tydligt. Exempel:
 
-> Om du tecknar avtalet via CasaVita kan vi få ersättning från leverantören. Det påverkar inte ditt pris.
+> Om du tecknar avtalet via Hemmakollen kan vi få ersättning från leverantören. Det påverkar inte ditt pris.
 
 Om hela marknaden inte jämförs ska detta också framgå.
 
@@ -424,7 +424,7 @@ AI är inte nödvändig för att skapa värde i början. MVP:n bör starta med t
 
 ### Varumärkesidé
 
-Namnet CasaVita kombinerar känslan av hem och liv. Det ska upplevas varmt, mänskligt och lätt att säga. Referenskänslan är ett möte mellan svenska, etablerade konsumentvarumärken och mjuk, modern teknik – mer Hemnet, IKEA och Aurora än fintech eller kryptotjänst.
+Namnet Hemmakollen säger precis vad produkten gör: koll på hemmet. Det ska upplevas varmt, mänskligt och lätt att säga. (Arbetsnamnet CasaVita byttes till Hemmakollen 1 oktober 2026.) Referenskänslan är ett möte mellan svenska, etablerade konsumentvarumärken och mjuk, modern teknik – mer Hemnet, IKEA och Aurora än fintech eller kryptotjänst.
 
 ### Visuell riktning
 
@@ -469,7 +469,7 @@ Exempel:
 
 ## 12. Data, integritet och säkerhet
 
-CasaVita kommer att behandla privat och potentiellt känslig ekonomisk information. Förtroende måste därför vara ett produktkrav, inte bara ett juridiskt dokument.
+Hemmakollen kommer att behandla privat och potentiellt känslig ekonomisk information. Förtroende måste därför vara ett produktkrav, inte bara ett juridiskt dokument.
 
 ### Grundkrav
 
@@ -582,7 +582,7 @@ Viktiga relationer:
 
 ### Primärt produktmått
 
-**Aktiva hushåll som varje månad får och hanterar minst en relevant händelse i CasaVita.**
+**Aktiva hushåll som varje månad får och hanterar minst en relevant händelse i Hemmakollen.**
 
 Detta mäter mer verkligt värde än enbart registrerade konton.
 
@@ -731,7 +731,7 @@ Mål: bredda från ekonomisk kontroll till hela hushållets samordning.
 
 ### För bred produkt
 
-**Risk:** CasaVita försöker samtidigt bli budgetapp, uppgiftssystem, kalender, jämförelsesajt och AI-assistent.  
+**Risk:** Hemmakollen försöker samtidigt bli budgetapp, uppgiftssystem, kalender, jämförelsesajt och AI-assistent.  
 **Motåtgärd:** Låt överblick över återkommande kostnader, avtal och rätt tajmade påminnelser vara MVP-kärnan.
 
 ### För mycket manuell registrering
@@ -787,14 +787,14 @@ Följande ska inte betraktas som slutligt beslutat:
 
 ### Affär
 
-- Vilka partnerkategorier kan CasaVita faktiskt teckna avtal inom först?
+- Vilka partnerkategorier kan Hemmakollen faktiskt teckna avtal inom först?
 - Ska samarbeten ske direkt med leverantörer eller genom affiliatenätverk/jämförelsepartner?
 - Hur beräknas och visas uppskattad besparing?
 - Vilka kommersiella regler ska förhindra att provision styr rekommendationer fel?
 
 ### Varumärke
 
-- Är CasaVita slutligt bolags- och produktnamn?
+- Är Hemmakollen slutligt bolags- och produktnamn?
 - Är domän, sociala användarnamn och varumärkesskydd kontrollerade?
 - Vilken slutlig logotyp, färgpalett och typografi ska användas?
 - Ska namnet kommuniceras med eller utan ett förklarande tillägg?
@@ -974,7 +974,7 @@ En funktion är inte klar enbart för att den syns i gränssnittet. Den är klar
 - Systemet beräknar sista relevanta åtgärdsdag.
 - Påminnelsen visas i appen och, om användaren valt det, via push eller e-post.
 - Användaren kan markera som hanterad eller skjuta upp.
-- CasaVita visar inte ett partnererbjudande om relevansregeln saknar tillräcklig information.
+- Hemmakollen visar inte ett partnererbjudande om relevansregeln saknar tillräcklig information.
 - Kommersiell ersättning märks tydligt när ett erbjudande visas.
 
 ---
@@ -998,7 +998,7 @@ När Claude, ChatGPT, Codex eller annan assistent arbetar med projektet ska den:
 
 ### Färdig startprompt till Claude eller annan AI
 
-> Du tar nu över arbetet med CasaVita. Läs hela projekthandoff-dokumentet innan du börjar. CasaVita är en kostnadsfri svensk konsumentapp som ska samla hushållets återkommande kostnader, avtal och viktiga vardagshändelser, och hjälpa användaren att fatta bättre beslut vid rätt tidpunkt. Produkten ska kännas varm, trygg, enkel och hemnära – inte som ett kallt finansverktyg eller en aggressiv jämförelsesajt. Intäkter ska främst komma från transparent partnerersättning när en relevant användare frivilligt går vidare med ett erbjudande.
+> Du tar nu över arbetet med Hemmakollen. Läs hela projekthandoff-dokumentet innan du börjar. Hemmakollen är en kostnadsfri svensk konsumentapp som ska samla hushållets återkommande kostnader, avtal och viktiga vardagshändelser, och hjälpa användaren att fatta bättre beslut vid rätt tidpunkt. Produkten ska kännas varm, trygg, enkel och hemnära – inte som ett kallt finansverktyg eller en aggressiv jämförelsesajt. Intäkter ska främst komma från transparent partnerersättning när en relevant användare frivilligt går vidare med ett erbjudande.
 >
 > Börja varje uppgift med att kontrollera om den tillhör beslutad MVP, senare roadmap eller ett öppet beslut. Hitta inte på beslut. Skydda användarnas data, håll lösningen enkel och mobilanpassad, och dokumentera antaganden. Om du arbetar med kod ska du först granska befintligt repository, instruktioner och aktuell status. Om något centralt saknas ska du ställa konkreta frågor innan du bygger en lösning som låser projektet.
 >
@@ -1008,7 +1008,7 @@ När Claude, ChatGPT, Codex eller annan assistent arbetar med projektet ska den:
 
 ## 25. Rekommenderade nästa steg från dagens läge
 
-1. Bekräfta att CasaVita är slutligt namn och kontrollera domän, bolagsnamn och varumärkesrisk.
+1. Bekräfta att Hemmakollen är slutligt namn och kontrollera domän, bolagsnamn och varumärkesrisk.
 2. Bestäm den exakta första målgruppen: ensamhushåll, sambor eller båda.
 3. Lås MVP:n till överblick, avtal, påminnelser och ett begränsat antal relevanta insikter.
 4. Bestäm om första leveransen ska vara PWA eller native-app.
@@ -1025,10 +1025,10 @@ När Claude, ChatGPT, Codex eller annan assistent arbetar med projektet ska den:
 
 ## 26. Kort slutbild
 
-CasaVita ska inte bara tala om vart pengarna gick. Produkten ska förstå hushållets återkommande åtaganden, uppmärksamma användaren när något faktiskt spelar roll och hjälpa till att genomföra ett bättre nästa steg.
+Hemmakollen ska inte bara tala om vart pengarna gick. Produkten ska förstå hushållets återkommande åtaganden, uppmärksamma användaren när något faktiskt spelar roll och hjälpa till att genomföra ett bättre nästa steg.
 
 Den vinnande första versionen är därför inte den med flest funktioner. Det är den som snabbast får en användare att känna:
 
-> “Nu har jag koll på mitt hem, och CasaVita säger till när jag behöver göra något.”
+> “Nu har jag koll på mitt hem, och Hemmakollen säger till när jag behöver göra något.”
 
 Detta är projektets kärna och ska bevaras genom produktutveckling, partnerskap, design och kommersiella beslut.

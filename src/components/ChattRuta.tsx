@@ -1,4 +1,4 @@
-// CasaVita-assistenten — inbyggd chattyta på Översikten (under "Allt viktigt,
+// Hemmakollen-assistenten — inbyggd chattyta på Översikten (under "Allt viktigt,
 // på ett ställe"), byggd som ett ChatGPT/Claude-fönster: tom vy med stor
 // skrivruta och förslag, sedan konversation ovanför skrivrutan.
 // Svaren kommer från Claude via worker/chatt, eller från den lokala
@@ -101,7 +101,7 @@ export default function ChattRuta() {
           justeraHojd();
         }}
         onKeyDown={tangent}
-        placeholder="Fråga om elavtal, försäkring, räkningar, uppsägning – eller om CasaVita…"
+        placeholder="Fråga om elavtal, försäkring, räkningar, uppsägning – eller om Hemmakollen…"
         maxLength={2000}
         aria-label="Din fråga"
       />
@@ -110,12 +110,12 @@ export default function ChattRuta() {
   );
 
   return (
-    <section className={`panel chatt-panel ${tom ? "tom" : ""}`} aria-label="CasaVita-assistenten">
+    <section className={`panel chatt-panel ${tom ? "tom" : ""}`} aria-label="Hemmakollen-assistenten">
       <header className="chatt-topp">
         <div className="chatt-titel">
-          <span className="brand-mark" aria-hidden="true">C</span>
+          <span className="brand-mark" aria-hidden="true">H</span>
           <div>
-            <strong>CasaVita-assistenten</strong>
+            <strong>Hemmakollen-assistenten</strong>
             <small>{harChattBackend ? "Svarar på dina frågor om hemmet och appen" : "Demo · svarar på vanliga frågor"}</small>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function ChattRuta() {
       {tom ? (
         <div className="chatt-tomvy">
           <h2>Vad kan jag hjälpa till med?</h2>
-          <p>Ställ en fråga om hushållets avtal och kostnader, eller om hur CasaVita fungerar.</p>
+          <p>Ställ en fråga om hushållets avtal och kostnader, eller om hur Hemmakollen fungerar.</p>
           {composer}
           <div className="chatt-forslag" aria-label="Förslag på frågor">
             {FORSLAG_FRAGOR.map((f) => (
@@ -140,7 +140,7 @@ export default function ChattRuta() {
           <div className="chatt-lista" ref={listaRef}>
             {historik.map((m, i) => (
               <div key={i} className={`chatt-rad ${m.roll === "user" ? "jag" : "bot"}`}>
-                {m.roll === "assistant" && <span className="chatt-avatar" aria-hidden="true">C</span>}
+                {m.roll === "assistant" && <span className="chatt-avatar" aria-hidden="true">H</span>}
                 <div className="chatt-bubbla">
                   {m.text || (skriver && i === historik.length - 1 ? <span className="chatt-prick" aria-label="Skriver" /> : "")}
                 </div>

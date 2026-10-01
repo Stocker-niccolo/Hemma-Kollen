@@ -378,7 +378,7 @@ export default function App() {
   }
 
   if (harSupabase && !authKontrollerad) {
-    return <LoadingScreen text="Öppnar CasaVita…" />;
+    return <LoadingScreen text="Öppnar Hemmakollen…" />;
   }
 
   if (visaLanding && !anvandarId) {
@@ -397,8 +397,8 @@ export default function App() {
     <div className="app-shell">
       <aside className="sidebar" aria-label="Huvudmeny">
         <button className="brand" onClick={() => bytVy("oversikt")}>
-          <span className="brand-mark" aria-hidden="true">C</span>
-          <span>CasaVita</span>
+          <span className="brand-mark" aria-hidden="true">H</span>
+          <span>Hemmakollen</span>
         </button>
 
         <nav className="desktop-nav">
@@ -427,7 +427,7 @@ export default function App() {
           </div>
           {!anvandarId && (
             <button className="landing-return" onClick={() => setVisaLanding(true)}>
-              ‹ Om CasaVita
+              ‹ Om Hemmakollen
             </button>
           )}
         </div>
@@ -545,8 +545,8 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
     <div className="landing">
       <header className="landing-header">
         <div className="landing-brand">
-          <span className="brand-mark" aria-hidden="true">C</span>
-          <span>CasaVita</span>
+          <span className="brand-mark" aria-hidden="true">H</span>
+          <span>Hemmakollen</span>
         </div>
         <nav className="landing-nav" aria-label="Sidmeny">
           <a href="#sa-funkar-det">Så funkar det</a>
@@ -561,7 +561,7 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
             <span className="welcome-kicker">Din digitala hemmapartner · Kostnadsfritt</span>
             <h1>Samla ditt hem.<br />Få koll. Spara pengar.</h1>
             <p>
-              CasaVita samlar hushållets återkommande kostnader, avtal och viktiga datum
+              Hemmakollen samlar hushållets återkommande kostnader, avtal och viktiga datum
               på ett ställe — och säger till när det är läge att agera. Innan bindningstiden
               löper ut. Innan provperioden börjar kosta. Innan räkningen förfaller.
             </p>
@@ -582,18 +582,18 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
 
         <section className="landing-insight" aria-label="Exempel på insikt">
           <article className="insight-card">
-            <span className="insight-badge">Exempel på hur CasaVita säger till</span>
+            <span className="insight-badge">Exempel på hur Hemmakollen säger till</span>
             <h2>Din elkostnad har ökat tre månader i rad — och avtalet löper ut om 21 dagar.</h2>
             <p>
               Det kan vara ett bra tillfälle att jämföra alternativ. En möjlig besparing är
               cirka 180 kr per månad.
             </p>
-            <small>Om du tecknar ett avtal via CasaVita kan vi få ersättning från leverantören. Det påverkar inte ditt pris — och vi säger alltid till.</small>
+            <small>Om du tecknar ett avtal via Hemmakollen kan vi få ersättning från leverantören. Det påverkar inte ditt pris — och vi säger alltid till.</small>
           </article>
         </section>
 
         <section className="landing-pillars" id="sa-funkar-det">
-          <h2 className="landing-section-title">Vad CasaVita gör för ditt hushåll</h2>
+          <h2 className="landing-section-title">Vad Hemmakollen gör för ditt hushåll</h2>
           <div className="pillar-grid">
             <article className="pillar-card">
               <span className="stat-icon green" aria-hidden="true">▤</span>
@@ -608,7 +608,7 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
               <h3>Påminnelser när det faktiskt spelar roll</h3>
               <p>
                 Bindningstider, uppsägningsfönster och förfallodatum bevakas åt dig.
-                CasaVita säger till i rätt tid — inte efteråt.
+                Hemmakollen säger till i rätt tid — inte efteråt.
               </p>
             </article>
             <article className="pillar-card">
@@ -627,14 +627,14 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
           <ol className="step-list">
             <li><strong>Skapa ditt hushåll.</strong> Ensam, som par eller familj — bjud in vem du vill.</li>
             <li><strong>Lägg in dina kostnader och avtal.</strong> Några minuter räcker för en första överblick.</li>
-            <li><strong>Luta dig tillbaka.</strong> CasaVita håller koll och säger till när något behöver din uppmärksamhet.</li>
+            <li><strong>Luta dig tillbaka.</strong> Hemmakollen håller koll och säger till när något behöver din uppmärksamhet.</li>
           </ol>
         </section>
 
         <section className="landing-transparency" id="transparens">
           <h2 className="landing-section-title">Gratis — och ärligt om varför</h2>
           <p>
-            CasaVita kostar ingenting för dig. Om du väljer att gå vidare med ett erbjudande
+            Hemmakollen kostar ingenting för dig. Om du väljer att gå vidare med ett erbjudande
             från en partner kan vi få ersättning från leverantören. Det påverkar aldrig ditt
             pris, det märks alltid ut tydligt, och vi visar aldrig ett erbjudande bara för
             att ersättningen är hög. Dina uppgifter säljs inte vidare.
@@ -649,7 +649,7 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
       </main>
 
       <footer className="landing-footer">
-        <span>© {new Date().getFullYear()} CasaVita</span>
+        <span>© {new Date().getFullYear()} Hemmakollen</span>
         <span>Under utveckling — sluten beta öppnar snart.</span>
       </footer>
     </div>
@@ -660,7 +660,7 @@ function LoadingScreen({ text }: { text: string }) {
   return (
     <main className="auth-screen">
       <div className="auth-card loading-card" role="status">
-        <span className="auth-brand-mark" aria-hidden="true">C</span>
+        <span className="auth-brand-mark" aria-hidden="true">H</span>
         <div className="loading-dot" aria-hidden="true" />
         <p>{text}</p>
       </div>
@@ -692,8 +692,8 @@ function LoginScreen() {
     <main className="auth-screen">
       <section className="auth-card">
         <div className="auth-brand">
-          <span className="auth-brand-mark" aria-hidden="true">C</span>
-          <span>CasaVita</span>
+          <span className="auth-brand-mark" aria-hidden="true">H</span>
+          <span>Hemmakollen</span>
         </div>
         <p className="eyebrow">Välkommen hem</p>
         <h1>Logga in utan lösenord.</h1>
@@ -848,7 +848,7 @@ function Overview({ nastaRakning, obetalda, oppnaSysslor, sysslor, inkop, hushal
             <p>{forslag[0]?.anledning ?? "Vi fortsätter hålla koll och säger till när något förändras."}</p>
           </div>
           {forslag[0] && <a href={forslag[0].affiliateUrl} target="_blank" rel="noreferrer">Se jämförelsen →</a>}
-          <small>Uppskattning baserad på generell marknadsdata. CasaVita förmedlar inte avtal och märker alltid ut när vi kan få ersättning.</small>
+          <small>Uppskattning baserad på generell marknadsdata. Hemmakollen förmedlar inte avtal och märker alltid ut när vi kan få ersättning.</small>
         </section>
       </div>
     </>

@@ -1,8 +1,8 @@
-# CasaVita — produktspecifikation
+# Hemmakollen — produktspecifikation
 
 ## Produktlöfte
 
-CasaVita ger svenska hushåll ett gemensamt ställe för det som annars
+Hemmakollen ger svenska hushåll ett gemensamt ställe för det som annars
 försvinner mellan inkorgar, lappar och chattar: räkningar, sysslor, avtal och
 viktiga datum. Appen ska minska vardagsstress först och hitta onödiga kostnader
 som ett extra värde.
@@ -27,7 +27,7 @@ pengar och ansvar utan att införa ännu ett tungt projektverktyg.
 3. Hushållet registrerar en räkning, syssla, ett inköp eller avtal manuellt.
 4. Alla medlemmar ser samma uppdaterade översikt.
 5. En medlem markerar räkningen betald eller sysslan klar.
-6. CasaVita visar nästa viktiga datum och veckans framsteg.
+6. Hemmakollen visar nästa viktiga datum och veckans framsteg.
 7. När tillräcklig kostnadsdata finns visas ett transparent besparingsförslag.
 
 ## Ingår i första byggfasen
@@ -125,7 +125,7 @@ säger aldrig **”vi rekommenderar”** när försäkring berörs.
 
 ## Acceptanskriterier för byggstarten
 
-- [x] Produktnamnet är CasaVita i klient och dokumentation.
+- [x] Produktnamnet är Hemmakollen i klient och dokumentation.
 - [x] Webbappen har fungerande vyer för översikt, räkningar och sysslor.
 - [x] Webbappen har separata vyer för gemensamma inköp och avtal/abonnemang.
 - [x] Alla beslutade avtalskategorier och försäkringsundertyper finns i klienten.
