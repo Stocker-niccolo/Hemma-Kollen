@@ -120,7 +120,9 @@ export default function App() {
   const [hushallId, setHushallId] = useState(harSupabase ? "" : DEMO_HUSHALL);
   const [hushallsnamn, setHushallsnamn] = useState(DEMO_HUSHALLSNAMN);
   const [dataKalla, setDataKalla] = useState<DataKalla>(harSupabase ? "synkar" : "demo");
-  const [visaLanding, setVisaLanding] = useState(true);
+  const [visaLanding, setVisaLanding] = useState(
+    () => !new URLSearchParams(window.location.search).has("app"),
+  );
 
   useEffect(() => {
     const klient = supabase;
@@ -532,7 +534,6 @@ export default function App() {
       )}
 
       {notis && <div className="toast" role="status">✓ {notis}</div>}
-      <ChattRuta />
     </div>
   );
 }
@@ -651,7 +652,6 @@ function Landing({ onEnter, harSupabase }: { onEnter: () => void; harSupabase: b
         <span>© {new Date().getFullYear()} CasaVita</span>
         <span>Under utveckling — sluten beta öppnar snart.</span>
       </footer>
-      <ChattRuta />
     </div>
   );
 }
@@ -773,6 +773,8 @@ function Overview({ nastaRakning, obetalda, oppnaSysslor, sysslor, inkop, hushal
           <div className="shrub shrub-one" /><div className="shrub shrub-two" />
         </div>
       </section>
+
+      <ChattRuta />
 
       <section className="stats-grid" aria-label="Hushållets nuläge">
         <button className="stat-card" onClick={() => onChangeView("rakningar")}>
