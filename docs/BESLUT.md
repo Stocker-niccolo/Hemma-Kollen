@@ -1,6 +1,6 @@
 # Hemmakollen — beslutsliggare och nästa steg
 
-Uppdaterad: 1 oktober 2026. Kompletterar [`HANDOFF.md`](./HANDOFF.md) (styrande)
+Uppdaterad: 5 oktober 2026. Kompletterar [`HANDOFF.md`](./HANDOFF.md) (styrande)
 med status per öppet beslut ur handoffens avsnitt 19, samt de konkreta stegen
 framåt. Statusar: **BESLUTAT** · **REKOMMENDATION** (väntar ägar-ja) · **ÖPPET**.
 
@@ -52,7 +52,7 @@ Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
 | Idé | Status | Läge |
 |---|---|---|
 | AI-bot i chattruta på hemsidan som svarar på frågor om Hemmakollen och hushållsämnena | BESLUTAT — BYGGD 1/10 | Chattrutan ligger nere till höger på landningssidan och i appen. Kunskapsbas i `src/data/kunskap.ts` (enda källan), motor i `src/engine/chatt.ts` (13 tester), widget i `src/components/ChattRuta.tsx`. Svar från Claude (`claude-opus-5-5`, effort low, prompt-cache, server-side fallback) via Cloudflare Worker i `worker/chatt/` — nyckeln bor där, aldrig i klienten. Utan backend kör rutan en lokal FAQ-motor märkt "Demo". Hårda regler i systemprompten: estimat-inte-utfall, aldrig förmedla försäkring/lån, ersättning märks ut, lova inga olanserade funktioner, be aldrig om personnummer/kort. **Ägarsteg för skarpt läge:** se `worker/chatt/README.md` (Anthropic-nyckel, `wrangler deploy`, repo-variabel `VITE_CHATT_URL`, rate-limit-regel). |
-| Grannhjälpen — välj syssla (rengöra sopkärl, skotta tomten, klippa häck …) och få hjälp av grannar via hemsidan | ÖPPET — STRATEGIBESLUT | Byggs inte förrän beslutat. Detta är en **tvåsidig marknadsplats** (hushåll ↔ hjälpare), inte en organizer-funktion, och ligger utanför handoffens MVP (fas 4 "ytterligare tjänster"). Frågor som måste besvaras först: (a) vem är hjälparen — grannar privat, egenanställda via plattform (Frilans Finans-modell) eller lokala företag med RUT-avdrag? (b) betalning — Swish privat utan Hemmakollen i mitten, eller Hemmakollen som betalförmedlare (kräver tillstånd/partner)? (c) försäkring och ansvar vid skada; (d) skatt (privatperson som får betalt = inkomst); (e) intäkt för Hemmakollen — leadavgift från företag passar affärsmodellen bäst och undviker (b)–(d). **Rekommendation:** första version = "beställ hjälp"-formulär per syssla som skickar en förfrågan till lokala RUT-företag/partners (lead-modell, samma transparensregel som övriga partners), inte ett eget grannnätverk. Boten vet att funktionen är planerad och lovar inget. |
+| Grannhjälpen — välj syssla (rengöra sopkärl, skotta tomten, klippa häck …) och få hjälp av grannar via hemsidan | REKOMMENDATION — väntar ägar-ja (5/10) | Fullt beslutsunderlag i [`GRANNHJALPEN.md`](./GRANNHJALPEN.md). Kort: bygg **inte** ett eget grannnätverk med betalning mellan privatpersoner (hushållet blir arbetsgivare över 10 000 kr/år, ingen RUT, ingen försäkring, ingen intäkt). Bygg i stället **"Beställ hjälp"**: välj syssla i appen → förfrågan till 1–3 lokala RUT-företag eller en plattform av Yepstr-typ (anställda ungdomar i grannskapet) → hushållet betalar partnern direkt med RUT-avdrag, Hemmakollen tar leadersättning med samma transparensregel som övriga partners. Pengar går aldrig genom Hemmakollen. Tre steg V0 (lead) → V1 (plattformsintegration) → V2 (eget nätverk, bara om efterfrågan bevisats). Ägarbeslut som krävs: modell, efterfrågetest först (liten "Få hjälp"-knapp som bara mäter klick), startområde, sysslelista, plats i byggordningen (rekommenderat: efter påminnelser). Boten säger fortsatt "planerad" tills V0 finns. |
 
 ---
 
@@ -71,6 +71,8 @@ Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
    tas fram på beställning.
 6. **Juridisk kartläggning**: GDPR-register, marknadsföringssamtycke,
    gränsdragning mot försäkringsdistribution/kreditförmedling.
+7. **Grannhjälpen**: fatta de fem besluten i `GRANNHJALPEN.md` §7; välj
+   startområde och sondera 2–3 lokala RUT-företag/partnerplattform.
 
 ## Nästa byggsteg (i ordning, efter ägar-ja per rad ovan)
 
@@ -83,3 +85,6 @@ Roller, budget och lanseringstid: ÖPPET — ÄGARSTEG.
    notisinställningar — handoffens MVP-kärna som ännu saknas.
 4. PWA-manifest + installbarhet.
 5. Verifierade marknadssnitt + riktiga partnerlänkar med ersättningsmärkning.
+6. Grannhjälpen V0 "Beställ hjälp" (efter ägar-ja och minst två signerade
+   partners). Efterfrågetestet (bara en knapp som mäter klick) kan läggas in
+   tidigare på beställning.
